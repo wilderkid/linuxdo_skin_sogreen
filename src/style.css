@@ -1,0 +1,500 @@
+/* ==========================================================================
+   1. 全局配置：极简色彩 & 字体
+   ========================================================================== */
+:root {
+    /* --- 用户指定点缀色 (仅用于高亮) --- */
+    --c-accent-green: #B4DEBD;
+    --c-accent-green-deep: #3D7A4E; /* 更深的青色，用于文本 */
+    --c-accent-pink:  #FFA4A4;
+    --c-highlight-alpha: #3D7A4E; /* 更清晰的英文字母高亮色 */
+    --c-highlight-numeric: #FFA4A4; /* 数字高亮色 */
+    
+    /* --- 极简背景系 (Modern Gray Scale) --- */
+    --bg-body: #f8f9fa;       /* 极淡的灰白背景，护眼且现代 */
+    --bg-card: #ffffff;       /* 卡片纯白 */
+    --border-card: #eaecf0;   /* 极细的浅灰边框 */
+    
+    /* --- 字体配置 --- */
+    --my-font-stack: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                     "荆南麦圆体", "素材集市康康体","苍耳舒圆体 W01",
+                     "PingFang SC", "HarmonyOS Sans", "Microsoft YaHei", sans-serif;
+    
+    --font-shadow: 0.05px 0.05px 0px rgba(0, 0, 0, 0.05);
+    --letter-spacing: 0.8px;
+
+    /* --- 文本颜色 --- */
+    --text-title: #111827;    /* 深黑标题 */
+    --text-desc:  #4b5563;    /* 深灰摘要 */
+    --text-meta:  #9ca3af;    /* 浅灰元数据 */
+}
+
+/* 深色模式 (Dark Mode) - 保持克制 */
+html.dark {
+    --bg-body: #101010;
+    --bg-card: #1c1c1c;
+    --border-card: #2a2a2a;
+    --text-title: #f3f4f6;
+    --text-desc:  #d1d5db;
+    --text-meta:  #6b7280;
+    --c-accent-green: #2F4F4F;
+    --c-accent-green-deep: #81C784; /* 适配深色模式的亮绿色 */
+    --c-accent-pink:  #8B4040;
+    --c-highlight-alpha: #81C784; /* 适配深色模式的亮绿色 */
+    --c-highlight-numeric: #FFA4A4;
+}
+
+/* 劫持系统变量，强制背景 */
+:root {
+    --font-family: var(--my-font-stack) !important;
+    --d-header-background: var(--bg-card) !important; /* 头部回归白色/黑底 */
+    --d-content-background: var(--bg-card) !important;
+    --primary: var(--text-title) !important;
+}
+
+/* 头部投影去除，改为极细底边 */
+.d-header {
+    box-shadow: none !important;
+    border-bottom: 1px solid var(--border-card) !important;
+}
+
+/* 全局字体应用 */
+html, body, input, button, select, textarea, .topic-list .title, span, p, a, div {
+    font-family: var(--my-font-stack) !important;
+    text-shadow: var(--font-shadow) !important;
+    letter-spacing: var(--letter-spacing) !important;
+}
+.d-icon, .fa { text-shadow: none !important; }
+
+/* ==========================================================================
+   2. 列表布局 (Clean Grid)
+   ========================================================================== */
+
+.topic-list .topic-list-header { display: none !important; }
+
+.topic-list tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+    border: none !important;
+}
+
+/* 卡片本体 */
+.topic-list tbody tr.topic-list-item {
+    display: grid;
+    grid-template-columns: 68px 1fr auto auto auto; /* 头像 | 内容 | 数据 */
+    grid-template-areas: "avatar content posts views activity";
+    align-items: center; /* 垂直居中 */
+    gap: 16px;
+
+    background: var(--bg-card);
+    border: 1px solid var(--c-accent-green) !important; /* 默认发光边框 */
+    border-radius: 12px;
+    padding: 20px 24px;
+    
+    box-shadow: 0 0 8px var(--c-accent-green); /* 默认发光效果 */
+    transition: all 0.2s ease;
+}
+
+/* 已访问的帖子恢复普通边框 */
+.topic-list-item.was-read {
+    border-color: var(--border-card) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* 悬浮效果：轻微上浮 + 边框变色 (使用你的青/粉) */
+.topic-list tbody tr.topic-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 4px -8px rgba(0, 0, 0, 0.08) !important;
+    border-color: var(--c-accent-pink) !important; /* 悬浮变粉色边框 */
+}
+
+/* 隐藏“新回复”指示器（绿点） */
+.topic-list-item .topic-status .new-indicator {
+    display: none !important;
+}
+
+/* 移除已读帖子的左侧竖线标记 (更高优先级) */
+body #main-outlet .topic-list .topic-list-item.was-read .main-link {
+    border-left: none !important;
+}
+
+.topic-list td { padding: 0 !important; border: none !important; display: block; }
+
+/* ==========================================================================
+   3. 内容区域详解
+   ========================================================================== */
+
+/* 左侧头像 */
+.topic-list .posters {
+    grid-area: avatar;
+    margin-top: 4px;
+}
+.topic-list .posters > a:not(:first-child) { display: none; }
+.topic-list .posters a { margin: 0; }
+.topic-list .posters img.avatar {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px; /* 方圆角 */
+    background: var(--bg-body);
+}
+
+/* 中间文字区 */
+.topic-list .main-link {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* 统一控制标题、摘要、标签的间距 */
+}
+
+/* 标题：限制行数，允许换行 */
+.topic-list .link-top-line > .title {
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    color: var(--text-title) !important;
+    line-height: 1.6;
+    margin-bottom: 0; /* 间距由父元素 gap 控制 */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    padding: 0 !important;
+}
+
+/* 摘要：灰色，小字 */
+.topic-excerpt {
+    font-size: 0.9rem;
+    color: var(--text-desc);
+    line-height: 1.6;
+    margin-bottom: 0; /* 间距由父元素 gap 控制 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 标签区 */
+.topic-list .link-bottom-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0; /* 间距由父元素 gap 控制 */
+}
+
+/* 标签胶囊化 - 使用青色背景 */
+.discourse-tag {
+    background: #f0fdf4; /* 极淡的青色背景 */
+    color: #374151 !important;
+    border: 1px solid var(--c-accent-green); /* 青色边框 */
+    padding: 1px 10px;
+    border-radius: 100px;
+    font-size: 0.75rem !important;
+    font-weight: normal;
+}
+
+/* 分类标签 */
+.badge-wrapper.box {
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   4. 右侧数据区 (水平排列)
+   ========================================================================== */
+
+/* 将 回复, 浏览, 活动 分配到各自的网格区域 */
+.topic-list .posts    { grid-area: posts; }
+.topic-list .views    { grid-area: views; }
+.topic-list .activity { grid-area: activity; }
+
+/* 统一设置数据列的样式 */
+.topic-list .posts,
+.topic-list .views,
+.topic-list .activity {
+    position: static !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end; /* 数据靠右对齐 */
+    gap: 4px;
+    font-size: 0.8rem !important;
+    color: var(--text-meta) !important;
+    white-space: nowrap;
+    padding: 0 !important;
+    border: none !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* 移除粉色气泡 */
+.topic-list .posts span {
+    background: none !important;
+    color: var(--text-desc) !important;
+    font-weight: 600 !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+    border-radius: 0 !important;
+    min-width: auto !important;
+}
+
+/* 为数据添加文字提示 */
+.topic-list .posts::after {
+    content: '回复';
+    margin-left: 4px;
+}
+.topic-list .views::after {
+    content: '浏览';
+    margin-left: 4px;
+}
+
+/* 确保活动时间颜色正确 */
+.topic-list .activity span {
+    color: var(--text-meta) !important;
+}
+
+/* ==========================================================================
+   5. 侧边栏与细节修正
+   ========================================================================== */
+/* --- 侧边栏美化 --- */
+.sidebar-section-link {
+    padding: 10px 16px !important;
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: background-color 0.2s ease;
+    border-left: 3px solid transparent !important;
+}
+
+.sidebar-section-link:hover {
+    background-color: var(--bg-body) !important;
+}
+
+/* 侧边栏选中效果：左侧竖线 + 文字变色 */
+.sidebar-section-link.active {
+    background-color: transparent !important;
+    color: var(--c-accent-green-deep) !important;
+    font-weight: 600 !important;
+    border-left-color: var(--c-accent-green) !important;
+}
+
+/* 侧边栏图标样式 */
+.sidebar-section-link .d-icon {
+    color: var(--text-meta);
+    font-size: 1.1em;
+    margin-right: 8px;
+}
+
+.sidebar-section-link.active .d-icon {
+    color: var(--c-accent-green-deep) !important;
+}
+
+/* ==========================================================================
+   8. 帖子页面布局优化
+   ========================================================================== */
+/* 1. 将帖子区域背景改为与 body 一致，为卡片提供画布 */
+.container.posts {
+    background-color: var(--bg-card) !important;
+    padding: 12px 0;
+}
+
+/* 2. 为帖子和回复之间增加间距 */
+.post-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 3. 将每个帖子/回复都卡片化 (使用属性选择器精确定位) */
+article[id^="post_"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+/* 4. 美化右侧时间轴 */
+.timeline-container {
+    border-left: 1px solid var(--border-card) !important;
+    padding-left: 24px !important;
+    margin-left: 24px !important;
+    background: transparent !important;
+}
+
+/* 按钮修正 */
+.btn-primary {
+    background: var(--c-accent-pink) !important;
+    color: #fff !important;
+    border: none;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   6. 特效：英文数字高亮
+   ========================================================================== */
+.highlight-alpha {
+    color: var(--c-highlight-alpha) !important;
+    font-weight: 600; /* 加粗以增加辨识度 */
+}
+.highlight-numeric {
+    color: var(--c-highlight-numeric) !important;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   9. "更多话题" 板块 (推荐/相关)
+   ========================================================================== */
+.more-topics__container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    display: block;
+}
+
+.more-topics__container .nav-pills {
+    display: flex !important;
+    gap: 24px;
+    border-bottom: 1px solid var(--border-card);
+    padding-bottom: 12px;
+    flex-shrink: 0;
+    margin-bottom: 24px;
+}
+
+.more-topics__container .nav-pills .btn {
+    color: var(--text-meta);
+    font-weight: 500;
+    padding: 4px 8px;
+    border: none;
+    background: none !important;
+    box-shadow: none !important;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    border-radius: 0;
+}
+
+.more-topics__container .nav-pills .btn:hover {
+    color: var(--text-title);
+}
+
+.more-topics__container .nav-pills .btn.active {
+    color: var(--c-accent-green-deep) !important;
+    border-bottom-color: var(--c-accent-green-deep);
+    font-weight: 600;
+}
+
+ /* 移动端适配 */
+ @media (max-width: 768px) {
+     .topic-list tbody tr.topic-list-item {
+        grid-template-columns: 1fr auto;
+        grid-template-areas: "content replies" "content activity";
+        padding: 16px;
+    }
+    .topic-list .posters, .topic-list .views { display: none !important; }
+    .topic-list .posts { position: relative; top: 0; right: 0; margin-bottom: 10px;}
+    .topic-list .activity { position: relative; bottom: 0; right: 0; }
+    .topic-list .main-link { padding-right: 10px; }
+}
+
+/* ==========================================================================
+   7. 帖子内容页 (Markdown 样式)
+   ========================================================================== */
+.topic-post .cooked {
+    line-height: 1.8;
+    font-size: 1rem; /* 调小正文字体 */
+}
+
+.cooked h1, .cooked h2, .cooked h3 {
+    border-bottom: 1px solid var(--border-card);
+    padding-bottom: 10px;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+.cooked h1 { font-size: 1.8rem; }
+.cooked h2 { font-size: 1.5rem; }
+.cooked h3 { font-size: 1.25rem; }
+
+.cooked a {
+    color: #007BFF;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.2s ease;
+}
+.cooked a:hover {
+    border-bottom-color: #007BFF;
+}
+
+.cooked blockquote {
+    background-color: #f0fdf4;
+    border-left: 4px solid var(--c-accent-green);
+    padding: 12px 20px;
+    margin: 1.5em 0;
+    border-radius: 8px;
+}
+
+.cooked pre {
+    background-color: var(--bg-body);
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+}
+.cooked code {
+    background-color: #ffe5e5;
+    color: #c53030;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.cooked pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+}
+
+.cooked ul, .cooked ol {
+    padding-left: 2em;
+}
+
+.cooked hr {
+    border: none;
+    border-top: 1px solid var(--border-card);
+    margin: 2em 0;
+}
+/* 美化帖子正文中的图片 */
+.topic-post .cooked img:not(.emoji) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 2px 2px 5px #0000004d !important;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.topic-post .cooked img:not(.emoji):hover {
+    box-shadow: 0 0 8px var(--c-accent-green) !important;
+}
+/* 修复折叠内容的背景色 */
+.cooked details {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 1.5em 0;
+}
+
+.cooked details summary {
+    font-weight: bold;
+    cursor: pointer;
+}
+/* 移除图片父容器在悬停时的默认阴影 */
+.topic-post .cooked a:has(> img:not(.emoji)):hover,
+.topic-post .cooked div:has(> img:not(.emoji)):hover {
+    box-shadow: none !important;
+    background: none !important; /* 同时移除可能存在的背景色变化 */
+}

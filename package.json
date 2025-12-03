@@ -1,0 +1,19 @@
+{
+  "name": "linuxdo_ui",
+  "version": "1.0.0",
+  "main": "linuxdo_UI.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "pack": "npm run build && bestzip linuxdo_ui_project.zip dist src package.json vite.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "bestzip": "^2.2.1",
+    "vite": "^7.2.6",
+    "vite-plugin-monkey": "^7.1.5"
+  }
+}
