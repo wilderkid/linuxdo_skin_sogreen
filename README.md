@@ -22,14 +22,12 @@
 ---
 
 ## 📸 效果预览
+![1-9141b9fdf4bf8a1187d694dd5db8f47c.png](https://t.tutu.to/img/nJYsn)
 
-*(建议在此处替换为您自己的脚本效果截图)*
-
-**浅色模式:**
-![浅色模式预览](httpshttps://i.imgur.com/YOUR_LIGHT_MODE_IMAGE.png)
+![2-f789f97b3859456776b86cd9f1deef0a.png](https://t.tutu.to/img/nJj4d)
 
 **深色模式:**
-
+下个大版本更新深色模式
 
 ---
 
