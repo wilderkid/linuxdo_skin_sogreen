@@ -4,6 +4,9 @@
 # Build output
 /dist
 
+# Local reference files
+/reference/
+
 # Zip file
 /linuxdo_ui_project.zip
 

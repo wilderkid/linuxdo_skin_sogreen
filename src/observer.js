@@ -7,12 +7,27 @@ function debounce(func, wait) {
     };
 }
 
+const HIGHLIGHT_TARGET_SELECTOR = [
+    '.topic-list',
+    '.topic-post',
+    '#d-sidebar .sidebar-section-header-text',
+    '#d-sidebar .sidebar-section-link-content-text',
+    '#d-sidebar .sidebar-theme-toggle-dropdown .name',
+    '#d-sidebar .d-button-label'
+].join(', ');
+
 function highlight(element) {
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
     let node;
     const nodesToProcess = [];
     while (node = walker.nextNode()) {
-        if (node.parentElement.tagName.match(/^(STYLE|SCRIPT|TEXTAREA)$/i) || node.parentElement.classList.contains('highlight-alpha') || node.parentElement.classList.contains('highlight-numeric')) {
+        const parent = node.parentElement;
+        if (
+            !parent ||
+            parent.tagName.match(/^(STYLE|SCRIPT|TEXTAREA|NOSCRIPT|SVG)$/i) ||
+            parent.classList.contains('highlight-alpha') ||
+            parent.classList.contains('highlight-numeric')
+        ) {
             continue;
         }
         nodesToProcess.push(node);
@@ -56,10 +71,10 @@ function highlight(element) {
 }
 
 export const runHighlight = () => {
-    const targetNode = document.querySelector('.topic-list, .topic-post');
-    if (targetNode) {
+    const targetNodes = document.querySelectorAll(HIGHLIGHT_TARGET_SELECTOR);
+    targetNodes.forEach(targetNode => {
         highlight(targetNode);
-    }
+    });
 };
 
 const debouncedHighlight = debounce(runHighlight, 300);
