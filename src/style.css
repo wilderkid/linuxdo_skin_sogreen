@@ -2,22 +2,22 @@
    1. 全局配置：极简色彩 & 字体
    ========================================================================== */
 :root {
-    /* --- 用户指定点缀色 (仅用于高亮) --- */
+    /* --- 用户指定点缀�?(仅用于高�? --- */
     --c-accent-green: #B4DEBD;
     --c-accent-green-deep: #3D7A4E; /* 更深的青色，用于文本 */
     --c-accent-pink:  #FFA4A4;
-    --c-highlight-alpha: #3D7A4E; /* 更清晰的英文字母高亮色 */
-    --c-highlight-numeric: #FFA4A4; /* 数字高亮色 */
+    --c-highlight-alpha: #3D7A4E; /* 更清晰的英文字母高亮�?*/
+    --c-highlight-numeric: #FFA4A4; /* 数字高亮�?*/
     
-    /* --- 极简背景系 (Modern Gray Scale) --- */
+    /* --- 极简背景�?(Modern Gray Scale) --- */
     --bg-body: transparent;   /* Clear page canvas and let the site background show through */
     --bg-soft: #f0fdf4;       /* Small-area hover and icon background */
     --bg-card: #ffffff;       /* 卡片纯白 */
-    --border-card: #eaecf0;   /* 极细的浅灰边框 */
+    --border-card: #eaecf0;   /* 极细的浅灰边�?*/
     
     /* --- 字体配置 --- */
     --my-font-stack: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                     "荆南麦圆体", "素材集市康康体","苍耳舒圆体 W01",
+                     "荆南麦圆�?, "素材集市康康�?,"苍耳舒圆体 W01",
                      "PingFang SC", "HarmonyOS Sans", "Microsoft YaHei", sans-serif;
     
     --font-shadow: 0.05px 0.05px 0px rgba(0, 0, 0, 0.05);
@@ -26,7 +26,7 @@
     /* --- 文本颜色 --- */
     --text-title: #111827;    /* 深黑标题 */
     --text-desc:  #4b5563;    /* 深灰摘要 */
-    --text-meta:  #9ca3af;    /* 浅灰元数据 */
+    --text-meta:  #9ca3af;    /* 浅灰元数�?*/
 }
 
 /* 深色模式 (Dark Mode) - 保持克制 */
@@ -45,7 +45,7 @@ html.dark {
     --c-highlight-numeric: #FFA4A4;
 }
 
-/* 劫持系统变量，强制背景 */
+/* 劫持系统变量，强制背�?*/
 :root {
     --font-family: var(--my-font-stack) !important;
     --d-header-background: var(--bg-card) !important; /* 头部回归白色/黑底 */
@@ -53,7 +53,7 @@ html.dark {
     --primary: var(--text-title) !important;
 }
 
-/* 头部投影去除，改为极细底边 */
+/* 头部投影去除，改为极细底�?*/
 .d-header {
     box-shadow: none !important;
     border-bottom: 1px solid var(--border-card) !important;
@@ -68,8 +68,106 @@ html, body, input, button, select, textarea, .topic-list .title, span, p, a, div
 .d-icon, .fa { text-shadow: none !important; }
 
 /* ==========================================================================
-   2. 列表布局 (Clean Grid)
+   Homepage welcome banner, safe skin
    ========================================================================== */
+
+.welcome-banner.--location-above-topic-content {
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.custom-search-banner-wrap.welcome-banner__wrap {
+    width: min(100%, 760px);
+    margin: 0 auto !important;
+    padding: 14px 0 18px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.welcome-banner__title {
+    margin: 0 0 14px !important;
+    color: var(--text-title) !important;
+    font-size: 1.9rem !important;
+    font-weight: 720 !important;
+    line-height: 1.22 !important;
+    letter-spacing: 0 !important;
+    text-align: center;
+}
+
+@keyframes sogreen-search-breathe {
+    0%, 100% {
+        border-color: color-mix(in srgb, var(--c-accent-green) 54%, var(--border-card));
+        box-shadow:
+            0 0 10px color-mix(in srgb, var(--c-accent-green) 14%, transparent),
+            0 6px 18px rgba(61, 122, 78, 0.08);
+    }
+
+    50% {
+        border-color: color-mix(in srgb, var(--c-accent-green) 74%, var(--c-accent-green-deep));
+        box-shadow:
+            0 0 14px color-mix(in srgb, var(--c-accent-green) 26%, transparent),
+            0 0 34px color-mix(in srgb, var(--c-accent-green) 36%, transparent),
+            0 8px 24px rgba(61, 122, 78, 0.12);
+    }
+}
+
+.welcome-banner__search-menu .search-input--welcome-banner {
+    border: 1px solid color-mix(in srgb, var(--c-accent-green) 58%, var(--border-card)) !important;
+    border-radius: 999px !important;
+    background: color-mix(in srgb, var(--bg-card) 94%, var(--bg-soft)) !important;
+    box-shadow: 0 6px 18px rgba(61, 122, 78, 0.08) !important;
+    animation: sogreen-search-breathe 3.4s ease-in-out infinite;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    will-change: box-shadow;
+}
+
+.welcome-banner__search-menu .search-input--welcome-banner:focus-within {
+    animation: none;
+    border-color: var(--c-accent-green-deep) !important;
+    background: var(--bg-card) !important;
+    box-shadow:
+        0 0 12px color-mix(in srgb, var(--c-accent-green) 30%, transparent),
+        0 0 30px color-mix(in srgb, var(--c-accent-green) 34%, transparent),
+        0 8px 22px rgba(61, 122, 78, 0.12) !important;
+}
+
+.welcome-banner__search-menu #welcome-banner-search-input,
+.welcome-banner__search-menu .search-term__input {
+    color: var(--text-title) !important;
+    letter-spacing: 0 !important;
+}
+
+.welcome-banner__search-menu #welcome-banner-search-input::placeholder,
+.welcome-banner__search-menu .search-term__input::placeholder {
+    color: var(--text-meta) !important;
+    opacity: 0.9;
+}
+
+html.dark .welcome-banner__search-menu .search-input--welcome-banner {
+    background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-banner__search-menu .search-input--welcome-banner {
+        animation: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-search-banner-wrap.welcome-banner__wrap {
+        width: 100%;
+        padding: 10px 12px 14px !important;
+    }
+
+    .welcome-banner__title {
+        margin-bottom: 12px !important;
+        font-size: 1.45rem !important;
+    }
+}
 
 .topic-list .topic-list-header { display: none !important; }
 
@@ -98,17 +196,17 @@ html, body, input, button, select, textarea, .topic-list .title, span, p, a, div
     transition: all 0.2s ease;
 }
 
-/* 已访问的帖子恢复普通边框 */
+/* 已访问的帖子恢复普通边�?*/
 .topic-list-item.was-read {
     border-color: var(--border-card) !important;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
 }
 
-/* 悬浮效果：轻微上浮 + 边框变色 (使用你的青/粉) */
+/* 悬浮效果：轻微上�?+ 边框变色 (使用你的�?�? */
 .topic-list tbody tr.topic-list-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 4px -8px rgba(0, 0, 0, 0.08) !important;
-    border-color: var(--c-accent-pink) !important; /* 悬浮变粉色边框 */
+    border-color: var(--c-accent-pink) !important; /* 悬浮变粉色边�?*/
 }
 
 /* 隐藏“新回复”指示器（绿点） */
@@ -116,7 +214,7 @@ html, body, input, button, select, textarea, .topic-list .title, span, p, a, div
     display: none !important;
 }
 
-/* 移除已读帖子的左侧竖线标记 (更高优先级) */
+/* 移除已读帖子的左侧竖线标�?(更高优先�? */
 body #main-outlet .topic-list .topic-list-item.was-read .main-link {
     border-left: none !important;
 }
@@ -137,11 +235,11 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
 .topic-list .posters img.avatar {
     width: 48px !important;
     height: 48px !important;
-    border-radius: 12px; /* 方圆角 */
+    border-radius: 12px; /* 方圆�?*/
     background: var(--bg-soft);
 }
 
-/* 中间文字区 */
+/* 中间文字�?*/
 .topic-list .main-link {
     grid-area: content;
     display: flex;
@@ -173,7 +271,7 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
     overflow: hidden;
 }
 
-/* 标签区 */
+/* 标签�?*/
 .topic-list .link-bottom-line {
     display: flex;
     flex-wrap: wrap;
@@ -182,9 +280,9 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
     margin-top: 0; /* 间距由父元素 gap 控制 */
 }
 
-/* 标签胶囊化 - 使用青色背景 */
+/* 标签胶囊�?- 使用青色背景 */
 .discourse-tag {
-    background: #f0fdf4; /* 极淡的青色背景 */
+    background: #f0fdf4; /* 极淡的青色背�?*/
     color: #374151 !important;
     border: 1px solid var(--c-accent-green); /* 青色边框 */
     padding: 1px 10px;
@@ -203,10 +301,10 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
 }
 
 /* ==========================================================================
-   4. 右侧数据区 (水平排列)
+   4. 右侧数据�?(水平排列)
    ========================================================================== */
 
-/* 将 回复, 浏览, 活动 分配到各自的网格区域 */
+/* �?回复, 浏览, 活动 分配到各自的网格区域 */
 .topic-list .posts    { grid-area: posts; }
 .topic-list .views    { grid-area: views; }
 .topic-list .activity { grid-area: activity; }
@@ -240,7 +338,7 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
     min-width: auto !important;
 }
 
-/* 为数据添加文字提示 */
+/* 为数据添加文字提�?*/
 .topic-list .posts::after {
     content: '回复';
     margin-left: 4px;
@@ -256,9 +354,535 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
 }
 
 /* ==========================================================================
+   Category page cards
+   ========================================================================== */
+body.categories-list .list-container.--categories {
+    width: min(100%, 1320px);
+    max-width: 100%;
+    margin-inline: auto;
+    box-sizing: border-box;
+}
+
+body.categories-list .list-container.--categories .row.full-width,
+body.categories-list .list-container.--categories #list-area,
+body.categories-list .list-container.--categories .contents {
+    width: 100%;
+    max-width: none;
+}
+
+body.categories-list .categories-and-latest {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.85fr);
+    align-items: start;
+    gap: 18px;
+    width: 100%;
+}
+
+body.categories-list .categories-and-latest > .column {
+    min-width: 0;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+}
+
+body.categories-list .categories-and-latest,
+body.categories-list .categories-and-latest * {
+    letter-spacing: 0 !important;
+}
+
+body.categories-list .show-more .alert.alert-info.clickable {
+    margin: 0 0 14px;
+    border: 1px solid color-mix(in srgb, var(--c-accent-green) 56%, var(--border-card));
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--bg-soft) 70%, var(--bg-card));
+    color: var(--c-accent-green-deep);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) {
+    display: block;
+    width: 100%;
+    border: none !important;
+    border-collapse: separate;
+    background: transparent;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > thead {
+    display: none !important;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    border: none !important;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px;
+    align-items: center;
+    overflow: hidden;
+    min-width: 0;
+    min-height: 116px;
+    border: 1px solid var(--c-accent-green) !important;
+    border-radius: 12px;
+    background: var(--bg-card);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--c-accent-green) 70%, transparent);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id]:hover {
+    transform: translateY(-2px);
+    border-color: var(--c-accent-pink) !important;
+    box-shadow: 0 4px 4px -8px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td {
+    display: block;
+    min-width: 0;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.category {
+    position: relative;
+    padding: 18px 20px !important;
+}
+
+body.categories-list .category-list h3 {
+    margin: 0 !important;
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+body.categories-list .category-title-link:has(.category-logo) {
+    display: grid !important;
+    grid-template-columns: 54px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    color: var(--text-title) !important;
+    border-bottom: none !important;
+}
+
+body.categories-list .category-title-link:hover {
+    border-bottom: none !important;
+}
+
+body.categories-list .category-title-link .category-text-title {
+    grid-column: 2;
+    min-width: 0;
+}
+
+body.categories-list .category-title-link .badge-category {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--text-title) !important;
+    font-size: 1.05rem;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+body.categories-list .category-title-link .badge-category__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.categories-list .category-title-link .badge-category .d-icon {
+    flex: 0 0 auto;
+    color: var(--category-badge-color, var(--c-accent-green-deep)) !important;
+}
+
+body.categories-list .category-logo {
+    grid-column: 1;
+    grid-row: 1;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    background: var(--bg-soft);
+}
+
+body.categories-list .category-logo img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+body.categories-list .category-description {
+    margin: 10px 0 0 !important;
+    color: var(--text-desc);
+    font-size: 0.9rem;
+    line-height: 1.62;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.category:has(.category-logo) > .category-description {
+    margin-left: 68px !important;
+}
+
+body.categories-list .category-description > div {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+body.categories-list .subcategories {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 8px;
+    margin: 12px 0 0 !important;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.category:has(.category-logo) > .subcategories {
+    margin-left: 68px !important;
+}
+
+body.categories-list .subcategory {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}
+
+body.categories-list .subcategory .badge-category {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 180px;
+    padding: 3px 8px !important;
+    border: 1px solid color-mix(in srgb, var(--category-badge-color, var(--c-accent-green)) 45%, var(--border-card));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--category-badge-color, var(--c-accent-green)) 10%, var(--bg-card));
+    color: var(--text-desc) !important;
+    font-size: 0.76rem;
+    line-height: 1.25;
+}
+
+body.categories-list .subcategory .badge-category__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.categories-list .category__badges {
+    display: inline-flex !important;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 4px;
+    min-height: 22px;
+    vertical-align: middle;
+}
+
+body.categories-list .category__badges .badge {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 22px !important;
+    min-height: 22px !important;
+    padding: 0 8px !important;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c-accent-pink) 14%, var(--bg-card)) !important;
+    color: var(--c-accent-pink) !important;
+    font-size: 0.7rem;
+    font-weight: 650;
+    line-height: 1 !important;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.topics {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    gap: 8px;
+    min-width: 0;
+    padding: 18px 10px !important;
+    background: transparent !important;
+    color: var(--text-meta);
+    text-align: center;
+}
+
+body.categories-list td.topics > div:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+body.categories-list td.topics .unread-new {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+}
+
+body.categories-list td.topics .category__badges.unread-new {
+    display: inline-flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: auto;
+    max-width: 100%;
+}
+
+body.categories-list td.topics .category__badges.unread-new .badge {
+    min-width: 0;
+    height: 22px !important;
+    padding: 0 8px !important;
+}
+
+body.categories-list td.topics .value {
+    color: var(--c-accent-green-deep);
+    font-size: 1.12rem;
+    font-weight: 760;
+    line-height: 1;
+}
+
+body.categories-list td.topics .unit {
+    color: var(--text-meta);
+    font-size: 0.72rem;
+}
+
+body.categories-list .category-list.subcategories-with-subcategories {
+    display: block;
+    margin-top: 12px;
+    border: none !important;
+    background: transparent;
+}
+
+body.categories-list .category-list.subcategories-with-subcategories tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.categories-list .category-list.subcategories-with-subcategories tr[data-category-id] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--bg-soft) 46%, var(--bg-card));
+}
+
+body.categories-list .category-list.hidden {
+    display: none !important;
+}
+
+body.categories-list .muted-categories-heading {
+    margin: 16px 0 8px;
+    color: var(--text-meta);
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+body.categories-list .latest-topic-list {
+    position: sticky;
+    top: calc(var(--header-offset, 64px) + 14px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+}
+
+body.categories-list .latest-topic-list .table-heading {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 2px;
+    padding: 0 2px;
+    color: var(--text-title);
+    font-size: 0.96rem;
+    font-weight: 750;
+    line-height: 1.4;
+}
+
+body.categories-list .latest-topic-list-item {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    background: var(--bg-card);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+body.categories-list .latest-topic-list-item:hover {
+    transform: translateY(-1px);
+    border-color: var(--c-accent-green);
+    box-shadow: 0 6px 18px rgba(61, 122, 78, 0.08);
+}
+
+body.categories-list .latest-topic-list-item .topic-poster {
+    position: relative;
+    width: 38px;
+    height: 38px;
+}
+
+body.categories-list .latest-topic-list-item .topic-poster img.avatar {
+    display: block;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px;
+    background: var(--bg-soft);
+}
+
+body.categories-list .latest-topic-list-item .avatar-flair {
+    right: -5px;
+    bottom: -5px;
+}
+
+body.categories-list .latest-topic-list-item .main-link {
+    min-width: 0;
+}
+
+body.categories-list .latest-topic-list-item .top-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.categories-list .latest-topic-list-item .title {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text-title) !important;
+    border-bottom: none !important;
+    font-size: 0.9rem;
+    font-weight: 650;
+    line-height: 1.42;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+body.categories-list .latest-topic-list-item .bottom-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 7px;
+}
+
+body.categories-list .latest-topic-list-item .topic-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    color: var(--text-meta);
+    font-size: 0.76rem;
+    white-space: nowrap;
+}
+
+body.categories-list .latest-topic-list-item .badge-posts,
+body.categories-list .latest-topic-list-item .topic-last-activity a {
+    color: var(--text-meta) !important;
+}
+
+@media (max-width: 980px) {
+    body.categories-list .categories-and-latest {
+        grid-template-columns: 1fr;
+    }
+
+    body.categories-list .latest-topic-list {
+        position: static;
+    }
+}
+
+@media (max-width: 560px) {
+    body.categories-list .column.categories > .category-list:not(.hidden) > tbody {
+        grid-template-columns: 1fr;
+    }
+
+    body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] {
+        grid-template-columns: 1fr;
+    }
+
+    body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.topics {
+        min-width: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-top: 1px solid var(--border-card) !important;
+        border-left: none !important;
+    }
+
+    body.categories-list td.topics > div:first-child {
+        justify-content: center;
+    }
+
+    body.categories-list td.topics .unread-new {
+        justify-content: center;
+        width: 100%;
+    }
+
+    body.categories-list .category-title-link:has(.category-logo) {
+        grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    body.categories-list .category-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.category:has(.category-logo) > .category-description,
+    body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id] > td.category:has(.category-logo) > .subcategories {
+        margin-left: 54px !important;
+    }
+
+    body.categories-list .latest-topic-list-item {
+        grid-template-columns: 36px minmax(0, 1fr);
+    }
+
+    body.categories-list .latest-topic-list-item .topic-stats {
+        grid-column: 2;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
    5. 侧边栏与细节修正
    ========================================================================== */
-/* --- 侧边栏美化 --- */
+/* --- 侧边栏美�?--- */
 .sidebar-section-link {
     padding: 10px 16px !important;
     border-radius: 8px !important;
@@ -272,7 +896,7 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
     background-color: var(--bg-soft) !important;
 }
 
-/* 侧边栏选中效果：左侧竖线 + 文字变色 */
+/* 侧边栏选中效果：左侧竖�?+ 文字变色 */
 .sidebar-section-link.active {
     background-color: transparent !important;
     color: var(--c-accent-green-deep) !important;
@@ -280,7 +904,7 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
     border-left-color: var(--c-accent-green) !important;
 }
 
-/* 侧边栏图标样式 */
+/* 侧边栏图标样�?*/
 .sidebar-section-link .d-icon {
     color: var(--text-meta);
     font-size: 1.1em;
@@ -298,18 +922,34 @@ body #main-outlet .topic-list .topic-list-item.was-read .main-link {
 
 .sidebar-wrapper {
     background: var(--bg-body) !important;
-    border-right: 1px solid var(--border-card) !important;
+    box-sizing: border-box;
+    flex-shrink: 0;
     padding: 12px 10px 12px 0 !important;
+    position: relative;
+    z-index: 1;
 }
 
 #d-sidebar.sidebar-container,
 .sidebar-container {
     background: var(--bg-card) !important;
-    border: 1px solid var(--border-card) !important;
+    border: none !important;
     border-radius: 12px !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+    box-shadow:
+        inset 0 0 0 1px var(--border-card),
+        0 1px 3px rgba(0,0,0,0.04) !important;
     color: var(--text-desc) !important;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+body:has(.btn-sidebar-toggle[aria-expanded="false"]) .sidebar-wrapper {
+    padding-right: 0 !important;
+}
+
+body:has(.btn-sidebar-toggle[aria-expanded="false"]) #d-sidebar.sidebar-container,
+body:has(.btn-sidebar-toggle[aria-expanded="false"]) .sidebar-container {
+    box-shadow: none !important;
 }
 
 .sidebar-sections {
@@ -606,7 +1246,7 @@ html.dark .sidebar-section-link[aria-current="page"] {
 /* ==========================================================================
    8. 帖子页面布局优化
    ========================================================================== */
-/* 1. 将帖子区域背景改为与 body 一致，为卡片提供画布 */
+/* 1. 将帖子区域背景改为与 body 一致，为卡片提供画�?*/
 .container.posts {
     background-color: var(--bg-card) !important;
     padding: 12px 0;
@@ -619,7 +1259,7 @@ html.dark .sidebar-section-link[aria-current="page"] {
     gap: 24px;
 }
 
-/* 3. 将每个帖子/回复都卡片化 (使用属性选择器精确定位) */
+/* 3. 将每个帖�?回复都卡片化 (使用属性选择器精确定�? */
 article[id^="post_"] {
     background: var(--bg-card);
     border: 1px solid var(--border-card);
@@ -628,7 +1268,7 @@ article[id^="post_"] {
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
-/* 4. 美化右侧时间轴 */
+/* 4. 美化右侧时间�?*/
 .timeline-container {
     border-left: 1px solid var(--border-card) !important;
     padding-left: 24px !important;
@@ -645,7 +1285,7 @@ article[id^="post_"] {
 }
 
 /* ==========================================================================
-   6. 特效：英文数字高亮
+   6. 特效：英文数字高�?
    ========================================================================== */
 .highlight-alpha {
     color: var(--c-highlight-alpha) !important;
@@ -714,7 +1354,7 @@ article[id^="post_"] {
 }
 
 /* ==========================================================================
-   7. 帖子内容页 (Markdown 样式)
+   7. 帖子内容�?(Markdown 样式)
    ========================================================================== */
 .topic-post .cooked {
     line-height: 1.8;
@@ -793,6 +1433,68 @@ article[id^="post_"] {
 .topic-post .cooked img:not(.emoji):hover {
     box-shadow: 0 0 8px var(--c-accent-green) !important;
 }
+
+/* Quote header alignment */
+.cooked aside.quote > .title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px;
+    line-height: 1.35;
+}
+
+.topic-post .cooked aside.quote > .title img.avatar {
+    display: block !important;
+    flex: 0 0 24px;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+    transition: none;
+}
+
+.topic-post .cooked aside.quote > .title img.avatar:hover {
+    box-shadow: none !important;
+}
+
+.cooked aside.quote > .title .highlight-alpha,
+.cooked aside.quote > .title .highlight-numeric {
+    line-height: 1.35;
+}
+
+.cooked aside.quote > .title .quote-controls {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex: 0 0 auto;
+    gap: 4px;
+    min-height: 24px;
+    margin-left: auto;
+    line-height: 1;
+}
+
+.cooked aside.quote > .title .quote-controls a {
+    margin-left: 0 !important;
+}
+
+.cooked aside.quote > .title .quote-controls .btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-height: 24px;
+    padding: 0 !important;
+    line-height: 1;
+}
+
+.cooked aside.quote > .title .quote-controls .d-icon {
+    display: block;
+    width: 1em;
+    height: 1em;
+    margin: 0 !important;
+    line-height: 1;
+}
+
 /* 修复折叠内容的背景色 */
 .cooked details {
     background-color: var(--bg-card) !important;
