@@ -12,6 +12,9 @@ const HIGHLIGHT_TARGET_SELECTOR = [
     '.topic-post',
     '.user-summary-page .user-main',
     '.user-summary-page .user-content',
+    '.user-activity-page section.collapsed-info.about',
+    '.user-activity-page .user-navigation',
+    '.user-activity-page .post-list.user-stream',
     '#d-sidebar .sidebar-section-header-text',
     '#d-sidebar .sidebar-section-link-content-text',
     '#d-sidebar .sidebar-theme-toggle-dropdown .name',
@@ -19,19 +22,26 @@ const HIGHLIGHT_TARGET_SELECTOR = [
 ].join(', ');
 
 function highlight(element) {
-    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+    if (!element || element.nodeType !== Node.ELEMENT_NODE) return;
+    if (element.closest('.highlight-alpha, .highlight-numeric')) return;
+
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+            const parent = node.parentElement;
+            if (
+                !parent ||
+                parent.closest('style, script, textarea, noscript, svg, .highlight-alpha, .highlight-numeric') ||
+                !/[a-zA-Z0-9.\-]/.test(node.nodeValue)
+            ) {
+                return NodeFilter.FILTER_REJECT;
+            }
+
+            return NodeFilter.FILTER_ACCEPT;
+        }
+    }, false);
     let node;
     const nodesToProcess = [];
     while (node = walker.nextNode()) {
-        const parent = node.parentElement;
-        if (
-            !parent ||
-            parent.tagName.match(/^(STYLE|SCRIPT|TEXTAREA|NOSCRIPT|SVG)$/i) ||
-            parent.classList.contains('highlight-alpha') ||
-            parent.classList.contains('highlight-numeric')
-        ) {
-            continue;
-        }
         nodesToProcess.push(node);
     }
 
@@ -79,18 +89,69 @@ export const runHighlight = () => {
     });
 };
 
-const debouncedHighlight = debounce(runHighlight, 300);
+const pendingHighlightRoots = new Set();
 
-const observer = new MutationObserver((mutations) => {
-    let shouldRun = false;
-    for (const mutation of mutations) {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-            shouldRun = true;
-            break;
+function isGeneratedHighlightNode(node) {
+    return node.nodeType === Node.ELEMENT_NODE &&
+        (node.classList.contains('highlight-alpha') || node.classList.contains('highlight-numeric'));
+}
+
+function queueHighlightRoot(root) {
+    if (!root || root.nodeType !== Node.ELEMENT_NODE) return;
+
+    for (const pendingRoot of pendingHighlightRoots) {
+        if (pendingRoot === root || pendingRoot.contains(root)) return;
+        if (root.contains(pendingRoot)) {
+            pendingHighlightRoots.delete(pendingRoot);
         }
     }
-    if (shouldRun) {
-        debouncedHighlight();
+
+    pendingHighlightRoots.add(root);
+}
+
+function queueAddedNode(node) {
+    if (isGeneratedHighlightNode(node)) return;
+
+    if (node.nodeType === Node.TEXT_NODE) {
+        const parent = node.parentElement;
+        if (/[a-zA-Z0-9.\-]/.test(node.nodeValue) && parent?.closest(HIGHLIGHT_TARGET_SELECTOR)) {
+            queueHighlightRoot(parent);
+        }
+        return;
+    }
+
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+
+    if (node.matches(HIGHLIGHT_TARGET_SELECTOR)) {
+        queueHighlightRoot(node);
+        return;
+    }
+
+    if (node.closest(HIGHLIGHT_TARGET_SELECTOR)) {
+        queueHighlightRoot(node);
+        return;
+    }
+
+    node.querySelectorAll(HIGHLIGHT_TARGET_SELECTOR).forEach(queueHighlightRoot);
+}
+
+const debouncedHighlightPending = debounce(() => {
+    const roots = [...pendingHighlightRoots].filter(root => root.isConnected);
+    pendingHighlightRoots.clear();
+    roots.forEach(highlight);
+}, 120);
+
+const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+        if (mutation.type !== 'childList' || mutation.addedNodes.length === 0) {
+            continue;
+        }
+
+        mutation.addedNodes.forEach(queueAddedNode);
+    }
+
+    if (pendingHighlightRoots.size > 0) {
+        debouncedHighlightPending();
     }
 });
 
