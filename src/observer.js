@@ -10,6 +10,8 @@ function debounce(func, wait) {
 const HIGHLIGHT_TARGET_SELECTOR = [
     '.topic-list',
     '.topic-post',
+    '.user-summary-page .user-main',
+    '.user-summary-page .user-content',
     '#d-sidebar .sidebar-section-header-text',
     '#d-sidebar .sidebar-section-link-content-text',
     '#d-sidebar .sidebar-theme-toggle-dropdown .name',
