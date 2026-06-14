@@ -241,6 +241,39 @@ body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-a
     min-width: 136px !important;
 }
 
+/* Remove the inner pill decoration from profile image upload fields. */
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-profile-background, .pref-profile-bg, .pref-card-background, .pref-user-card-background, [data-setting-name="user-profile-background"], [data-setting-name="user-card-background"]) :is(.image-uploader, .image-upload, .uploaded-image-list, .uploaded-image-preview, .upload-selector, .upload-controls, .image-upload-controls)::before,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-profile-background, .pref-profile-bg, .pref-card-background, .pref-user-card-background, [data-setting-name="user-profile-background"], [data-setting-name="user-card-background"]) :is(.image-uploader, .image-upload, .uploaded-image-list, .uploaded-image-preview, .upload-selector, .upload-controls, .image-upload-controls)::after {
+    display: none !important;
+    content: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-profile-background, .pref-profile-bg, .pref-card-background, .pref-user-card-background, [data-setting-name="user-profile-background"], [data-setting-name="user-card-background"]) :is(.image-uploader, .image-upload, .uploaded-image-list, .uploaded-image-preview, .upload-selector, .upload-controls, .image-upload-controls) :is(.btn, button, .btn-default, .upload-btn, .image-upload-button) {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group:has(.d-icon-upload) :is(.btn, button.btn, .btn-default, .btn-icon-text, .upload-btn, .image-upload-button, .uppy-DragDrop-label) {
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group:has(.d-icon-upload) :is(.btn, button.btn, .btn-default, .btn-icon-text, .upload-btn, .image-upload-button, .uppy-DragDrop-label):hover {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
 html.dark body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group,
 html.dark body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table {
     background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
