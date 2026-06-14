@@ -1,4 +1,5 @@
 import './style.css';
+import './preferences-relaxed.css';
 import { runHighlight, setupObserver } from './observer';
 import { initMoreTopicsTabs, moveMoreTopicsList, setupMoreTopicsObserver } from './more-topics';
 import { setupUserProfileCardObserver, syncUserProfileCard } from './profile-card';

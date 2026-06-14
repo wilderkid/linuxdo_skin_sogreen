@@ -1,0 +1,291 @@
+/* Balanced layout for preference pages without the account avatar editor. */
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) {
+    --pref-relaxed-radius: 12px;
+    --pref-relaxed-border: color-mix(in srgb, var(--c-accent-green) 38%, var(--border-card));
+    --pref-relaxed-border-soft: color-mix(in srgb, var(--c-accent-green) 24%, var(--border-card));
+    --pref-relaxed-green-soft: color-mix(in srgb, var(--c-accent-green) 14%, var(--bg-card));
+    --pref-relaxed-pink-soft: color-mix(in srgb, var(--c-accent-pink) 10%, var(--bg-card));
+    --pref-relaxed-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 8px color-mix(in srgb, var(--c-accent-green) 24%, transparent);
+
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    width: 100% !important;
+    max-width: 980px !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    padding: 24px 0 34px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar))::before,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar))::after {
+    display: none !important;
+    content: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > span,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > br {
+    display: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 24px 24px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--pref-relaxed-border) !important;
+    border-radius: var(--pref-relaxed-radius) !important;
+    background: var(--bg-card) !important;
+    box-shadow: var(--pref-relaxed-shadow) !important;
+    box-sizing: border-box !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group::before,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group::after {
+    display: none !important;
+    content: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-label,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) legend.control-label {
+    display: flex !important;
+    align-items: center !important;
+    align-self: stretch !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 -24px !important;
+    padding: 16px 24px !important;
+    border: none !important;
+    border-bottom: 1px solid var(--pref-relaxed-border-soft) !important;
+    border-radius: 0 !important;
+    background:
+        linear-gradient(90deg, var(--pref-relaxed-green-soft), var(--pref-relaxed-pink-soft)) !important;
+    color: var(--text-title) !important;
+    font-size: 0.98rem !important;
+    font-weight: 820 !important;
+    line-height: 1.35 !important;
+    text-align: left !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-label::before,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) legend.control-label::before,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-label::after,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) legend.control-label::after {
+    display: none !important;
+    content: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .controls,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .instructions,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .static,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > table {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .controls {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 20px 0 0 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .instructions,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .static,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > p {
+    padding: 16px 0 0 !important;
+    box-sizing: border-box !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > table {
+    margin-top: 16px !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .controls > label:first-child {
+    display: block !important;
+    margin: 0 !important;
+    padding: 13px 16px !important;
+    border: 1px solid var(--pref-relaxed-border-soft) !important;
+    border-radius: 10px !important;
+    background: color-mix(in srgb, var(--bg-soft) 44%, var(--bg-card)) !important;
+    color: var(--text-desc) !important;
+    font-size: 0.94rem !important;
+    font-weight: 560 !important;
+    line-height: 1.65 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .controls > .controls {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .instructions {
+    color: var(--text-desc) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .checkbox-label,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) label.checkbox-label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 13px 16px !important;
+    box-sizing: border-box !important;
+    border: 1px solid var(--border-card) !important;
+    border-radius: 10px !important;
+    background: color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
+    box-shadow: none !important;
+    color: var(--text-title) !important;
+    font-size: 0.95rem !important;
+    font-weight: 540 !important;
+    line-height: 1.55 !important;
+    transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .checkbox-label:hover,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) label.checkbox-label:hover {
+    border-color: color-mix(in srgb, var(--c-accent-pink) 42%, var(--border-card)) !important;
+    background: color-mix(in srgb, var(--c-accent-pink) 8%, var(--bg-card)) !important;
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--c-accent-green) 10%, transparent) !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input[type="checkbox"],
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input.ember-checkbox {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input[type="text"],
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input[type="password"],
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input.ember-text-field,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .select-kit-header {
+    min-height: 46px !important;
+    padding: 10px 14px !important;
+    border: 1px solid var(--pref-relaxed-border-soft) !important;
+    border-radius: 10px !important;
+    background: color-mix(in srgb, var(--bg-card) 94%, var(--bg-soft)) !important;
+    color: var(--text-title) !important;
+    box-shadow: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input[type="text"]:focus,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input[type="password"]:focus,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input.ember-text-field:focus,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) details[open] > .select-kit-header,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .select-kit-header:focus {
+    border-color: color-mix(in srgb, var(--c-accent-green) 62%, var(--border-card)) !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent-green) 18%, transparent) !important;
+    outline: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table {
+    width: 100% !important;
+    overflow: hidden !important;
+    border: 1px solid var(--pref-relaxed-border-soft) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-radius: 10px !important;
+    background: var(--bg-card) !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table th,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table td {
+    padding: 12px 14px !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border-card) !important;
+    background: transparent !important;
+    vertical-align: middle !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table tr:last-child th,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table tr:last-child td {
+    border-bottom: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > .controls.save-button {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 2px 0 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > .controls.save-button .save-changes {
+    width: auto !important;
+    min-width: 136px !important;
+}
+
+html.dark body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group,
+html.dark body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table {
+    background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
+}
+
+@media (max-width: 840px) {
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) {
+        gap: 16px !important;
+        padding: 20px 0 30px !important;
+    }
+
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-label,
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) legend.control-label {
+        margin: 0 -17px !important;
+        padding: 14px 17px !important;
+    }
+
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group > .controls {
+        padding: 17px 0 0 !important;
+    }
+
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group {
+        padding: 0 17px 17px !important;
+    }
+
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .checkbox-label,
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) label.checkbox-label {
+        align-items: flex-start !important;
+    }
+
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input[type="checkbox"],
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) input.ember-checkbox {
+        margin-top: 3px !important;
+    }
+
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > .controls.save-button,
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > .controls.save-button .save-changes {
+        width: 100% !important;
+        justify-content: stretch !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .checkbox-label,
+    body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) label.checkbox-label {
+        transition: none !important;
+    }
+}
