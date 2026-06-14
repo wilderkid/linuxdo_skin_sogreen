@@ -230,7 +230,7 @@ body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-a
     display: flex !important;
     justify-content: flex-end !important;
     width: 100% !important;
-    margin: 0 !important;
+    margin: 18px 0 0 !important;
     padding: 2px 0 0 !important;
     border: none !important;
     background: transparent !important;
@@ -239,6 +239,78 @@ body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-a
 body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) > .controls.save-button .save-changes {
     width: auto !important;
     min-width: 136px !important;
+}
+
+/* Email preferences: each setting question reads as its own card. */
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-email-settings, .pref-activity-summary) > .controls[data-setting-name],
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .pref-email-settings > span > .control-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 14px 0 0 !important;
+    padding: 16px !important;
+    border: 1px solid var(--pref-relaxed-border-soft) !important;
+    border-radius: 10px !important;
+    background: color-mix(in srgb, var(--bg-soft) 38%, var(--bg-card)) !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-email-settings, .pref-activity-summary) > .controls[data-setting-name]:hover,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .pref-email-settings > span > .control-group:hover {
+    border-color: color-mix(in srgb, var(--c-accent-pink) 36%, var(--border-card)) !important;
+    background: color-mix(in srgb, var(--c-accent-pink) 7%, var(--bg-card)) !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .pref-email-settings > span {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .pref-email-settings > span > h3 {
+    margin: 18px 0 0 !important;
+    padding: 0 2px !important;
+    color: var(--text-title) !important;
+    font-size: 0.9rem !important;
+    font-weight: 780 !important;
+    line-height: 1.35 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-email-settings, .pref-activity-summary) > .controls[data-setting-name] > label:first-child,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .pref-email-settings > span > .control-group > label:first-child {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--text-title) !important;
+    font-size: 0.95rem !important;
+    font-weight: 650 !important;
+    line-height: 1.55 !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-email-settings, .pref-activity-summary) > .controls[data-setting-name] > .checkbox-label,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-email-settings, .pref-activity-summary) > .controls[data-setting-name] > label.checkbox-label {
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) :is(.pref-email-settings, .pref-activity-summary) > .controls[data-setting-name] > details,
+body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .pref-email-settings > span > .control-group > details {
+    width: 100% !important;
+    min-width: 0 !important;
 }
 
 /* Remove the inner pill decoration from profile image upload fields. */
