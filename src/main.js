@@ -1,29 +1,28 @@
 import './style.css';
 import { runHighlight, setupObserver } from './observer';
 import { initMoreTopicsTabs, moveMoreTopicsList, setupMoreTopicsObserver } from './more-topics';
+import { setupUserProfileCardObserver, syncUserProfileCard } from './profile-card';
 import { applyCustomFont, setupFontMenu } from './settings';
+
+function initSogreenUI() {
+    runHighlight();
+    setupObserver();
+    initMoreTopicsTabs();
+    moveMoreTopicsList();
+    setupMoreTopicsObserver();
+    syncUserProfileCard();
+    setupUserProfileCardObserver();
+    setupFontMenu();
+}
 
 (function() {
     'use strict';
 
-    // 立即应用字体，避免闪烁
     applyCustomFont();
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            runHighlight();
-            setupObserver();
-            initMoreTopicsTabs();
-            moveMoreTopicsList();
-            setupMoreTopicsObserver();
-            setupFontMenu(); // 设置菜单
-        });
+        document.addEventListener('DOMContentLoaded', initSogreenUI, { once: true });
     } else {
-        runHighlight();
-        setupObserver();
-        initMoreTopicsTabs();
-        moveMoreTopicsList();
-        setupMoreTopicsObserver();
-        setupFontMenu(); // 设置菜单
+        initSogreenUI();
     }
 })();
