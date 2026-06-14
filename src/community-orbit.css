@@ -1,0 +1,431 @@
+body.sogreen-community-page {
+    --community-line: color-mix(in srgb, var(--c-accent-green) 54%, var(--border-card));
+    --community-line-soft: color-mix(in srgb, var(--c-accent-green) 26%, var(--border-card));
+    --community-green-soft: color-mix(in srgb, var(--c-accent-green) 14%, var(--bg-card));
+    --community-pink-soft: color-mix(in srgb, var(--c-accent-pink) 12%, var(--bg-card));
+    --community-shadow: 0 18px 46px color-mix(in srgb, var(--c-accent-green-deep) 12%, transparent);
+}
+
+body.sogreen-community-page .published-page-header {
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-card) 94%, var(--bg-soft)), var(--bg-card)) !important;
+    border-bottom: 1px solid var(--community-line-soft) !important;
+}
+
+body.sogreen-community-page .published-page-header-wrapper,
+body.sogreen-community-page .published-page-content-wrapper {
+    max-width: 1180px !important;
+}
+
+body.sogreen-community-page .published-page-title {
+    color: var(--text-title) !important;
+}
+
+body.sogreen-community-page .published-page-content-wrapper {
+    padding-inline: 24px !important;
+}
+
+body.sogreen-community-page .published-page-content-header {
+    margin-bottom: 18px !important;
+}
+
+body.sogreen-community-page .published-page-content-body {
+    overflow: visible !important;
+}
+
+body.sogreen-community-page .published-page-content-body > :not(.sogreen-community-stage) {
+    display: none !important;
+}
+
+.sogreen-community-stage,
+.sogreen-community-stage * {
+    box-sizing: border-box;
+}
+
+.sogreen-community-stage {
+    color: var(--text-title);
+    padding: 8px 0 54px;
+}
+
+.sogreen-community-orbit {
+    position: relative;
+    min-height: 900px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--community-line-soft);
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--bg-card) 92%, transparent), color-mix(in srgb, var(--bg-soft) 62%, var(--bg-card))),
+        repeating-linear-gradient(90deg, transparent 0 39px, color-mix(in srgb, var(--c-accent-green) 8%, transparent) 40px);
+    box-shadow: var(--community-shadow);
+}
+
+.sogreen-community-rings,
+.sogreen-community-rings::before,
+.sogreen-community-rings::after {
+    position: absolute;
+    inset: 50%;
+    pointer-events: none;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sogreen-community-rings {
+    width: 840px;
+    height: 840px;
+    z-index: 0;
+    border: 1px solid color-mix(in srgb, var(--c-accent-green) 42%, transparent);
+    background:
+        radial-gradient(circle, transparent 0 35%, color-mix(in srgb, var(--c-accent-green) 12%, transparent) 35.4% 35.7%, transparent 36% 55%, color-mix(in srgb, var(--c-accent-pink) 16%, transparent) 55.4% 55.7%, transparent 56%),
+        conic-gradient(from 120deg, transparent 0 17%, color-mix(in srgb, var(--c-accent-green) 26%, transparent) 18% 19%, transparent 20% 49%, color-mix(in srgb, var(--c-accent-pink) 24%, transparent) 50% 51%, transparent 52% 100%);
+    opacity: 0.82;
+    animation: sogreen-community-ring-rotate 34s linear infinite;
+}
+
+.sogreen-community-rings::before {
+    content: "";
+    width: 560px;
+    height: 560px;
+    border: 1px solid color-mix(in srgb, var(--c-accent-pink) 34%, transparent);
+    background: conic-gradient(from 20deg, transparent 0 27%, color-mix(in srgb, var(--c-accent-green) 28%, transparent) 28% 29%, transparent 30% 100%);
+}
+
+.sogreen-community-rings::after {
+    content: "";
+    width: 300px;
+    height: 300px;
+    border: 1px solid color-mix(in srgb, var(--c-accent-green-deep) 24%, transparent);
+    box-shadow: 0 0 34px color-mix(in srgb, var(--c-accent-green) 24%, transparent);
+}
+
+.sogreen-community-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    width: 282px;
+    height: 282px;
+    place-items: center;
+    padding: 34px;
+    border: 1px solid color-mix(in srgb, var(--c-accent-green) 64%, var(--border-card));
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--c-accent-green) 20%, transparent), transparent 48%),
+        color-mix(in srgb, var(--bg-card) 92%, transparent);
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--bg-card) 84%, transparent),
+        0 0 38px color-mix(in srgb, var(--c-accent-green) 28%, transparent),
+        0 18px 40px color-mix(in srgb, var(--c-accent-green-deep) 16%, transparent);
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.sogreen-community-core::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 1px solid color-mix(in srgb, var(--c-accent-pink) 24%, transparent);
+    border-radius: inherit;
+}
+
+.sogreen-community-core-title {
+    position: relative;
+    z-index: 1;
+    margin: 0 !important;
+    color: var(--c-highlight-alpha) !important;
+    font-size: 34px !important;
+    line-height: 1.05 !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    text-transform: uppercase;
+}
+
+.sogreen-community-links {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+}
+
+.sogreen-community-link-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    width: 140px;
+    min-height: 74px;
+    align-content: center;
+    gap: 4px;
+    padding: 10px 12px;
+    border: 1px solid var(--community-line);
+    border-radius: 8px;
+    color: var(--text-title) !important;
+    text-decoration: none !important;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--bg-card) 94%, transparent), color-mix(in srgb, var(--community-green-soft) 78%, var(--bg-card))),
+        var(--bg-card);
+    box-shadow:
+        0 8px 22px color-mix(in srgb, var(--c-accent-green-deep) 10%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--bg-card) 82%, transparent) inset;
+    transform: translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) rotate(var(--orbit-angle-reverse));
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background 180ms ease,
+        transform 180ms ease;
+    animation: sogreen-community-card-glow 5.4s ease-in-out infinite;
+    animation-delay: var(--orbit-delay);
+}
+
+.sogreen-community-link-card:hover,
+.sogreen-community-link-card:focus-visible {
+    border-color: color-mix(in srgb, var(--c-accent-pink) 62%, var(--c-accent-green));
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--c-accent-pink) 10%, var(--bg-card)), color-mix(in srgb, var(--c-accent-green) 16%, var(--bg-card))),
+        var(--bg-card);
+    box-shadow:
+        0 14px 34px color-mix(in srgb, var(--c-accent-pink) 18%, transparent),
+        0 0 28px color-mix(in srgb, var(--c-accent-green) 26%, transparent);
+    transform: translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) rotate(var(--orbit-angle-reverse)) scale(1.04);
+}
+
+.sogreen-community-link-card:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--c-accent-green) 34%, transparent);
+    outline-offset: 3px;
+}
+
+.sogreen-community-link-category,
+.sogreen-community-link-host,
+.sogreen-community-knowledge-link-host {
+    overflow: hidden;
+    color: var(--text-desc) !important;
+    font-size: 11px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sogreen-community-link-category {
+    color: var(--c-accent-green-deep) !important;
+    font-weight: 700;
+}
+
+.sogreen-community-link-title {
+    overflow: hidden;
+    color: var(--text-title) !important;
+    font-size: 15px;
+    line-height: 1.25;
+    font-weight: 750;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sogreen-community-knowledge {
+    margin-top: 22px;
+    border: 1px solid var(--community-line-soft);
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-card) 94%, transparent), color-mix(in srgb, var(--community-pink-soft) 42%, var(--bg-card))),
+        var(--bg-card);
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--c-accent-green-deep) 8%, transparent);
+}
+
+.sogreen-community-knowledge-title {
+    margin: 0 !important;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--community-line-soft);
+    color: var(--text-title) !important;
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    text-align: center;
+}
+
+.sogreen-community-knowledge-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    padding: 16px;
+}
+
+.sogreen-community-knowledge-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--border-card) 76%, var(--c-accent-green));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft));
+}
+
+.sogreen-community-knowledge-card-title {
+    margin: 0 !important;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--community-line-soft);
+    color: var(--text-title) !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+}
+
+.sogreen-community-knowledge-list {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+}
+
+.sogreen-community-knowledge-link {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+    padding: 10px 11px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--text-title) !important;
+    text-decoration: none !important;
+    background: color-mix(in srgb, var(--bg-card) 78%, var(--bg-soft));
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+}
+
+.sogreen-community-knowledge-link:hover,
+.sogreen-community-knowledge-link:focus-visible {
+    border-color: color-mix(in srgb, var(--c-accent-green) 62%, var(--border-card));
+    background: color-mix(in srgb, var(--c-accent-green) 12%, var(--bg-card));
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--c-accent-green-deep) 10%, transparent);
+    transform: translateY(-1px);
+}
+
+.sogreen-community-knowledge-link:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--c-accent-green) 30%, transparent);
+    outline-offset: 2px;
+}
+
+.sogreen-community-knowledge-link-label {
+    overflow-wrap: anywhere;
+    color: var(--text-title) !important;
+    font-size: 14px;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+@keyframes sogreen-community-ring-rotate {
+    to {
+        transform: translate(-50%, -50%) rotate(1turn);
+    }
+}
+
+@keyframes sogreen-community-card-glow {
+    0%,
+    100% {
+        box-shadow:
+            0 8px 22px color-mix(in srgb, var(--c-accent-green-deep) 9%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--bg-card) 82%, transparent) inset;
+    }
+
+    50% {
+        box-shadow:
+            0 10px 26px color-mix(in srgb, var(--c-accent-green-deep) 12%, transparent),
+            0 0 24px color-mix(in srgb, var(--c-accent-green) 18%, transparent),
+            0 0 0 1px color-mix(in srgb, var(--bg-card) 82%, transparent) inset;
+    }
+}
+
+@media (max-width: 980px) {
+    body.sogreen-community-page .published-page-content-wrapper {
+        padding-inline: 16px !important;
+    }
+
+    .sogreen-community-orbit {
+        min-height: auto;
+        padding: 24px;
+    }
+
+    .sogreen-community-rings {
+        width: 360px;
+        height: 360px;
+        opacity: 0.45;
+    }
+
+    .sogreen-community-rings::before,
+    .sogreen-community-rings::after {
+        display: none;
+    }
+
+    .sogreen-community-core {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 220px;
+        height: 220px;
+        margin: 0 auto 24px;
+        padding: 24px;
+        transform: none;
+    }
+
+    .sogreen-community-core-title {
+        font-size: 28px !important;
+    }
+
+    .sogreen-community-links {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .sogreen-community-link-card {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: auto;
+        min-height: 78px;
+        transform: none !important;
+    }
+
+    .sogreen-community-link-card:hover,
+    .sogreen-community-link-card:focus-visible {
+        transform: translateY(-1px) !important;
+    }
+
+    .sogreen-community-knowledge-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .sogreen-community-stage {
+        padding-bottom: 36px;
+    }
+
+    .sogreen-community-orbit {
+        padding: 18px;
+    }
+
+    .sogreen-community-core {
+        width: 190px;
+        height: 190px;
+    }
+
+    .sogreen-community-core-title {
+        font-size: 24px !important;
+    }
+
+    .sogreen-community-links,
+    .sogreen-community-knowledge-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sogreen-community-rings,
+    .sogreen-community-link-card {
+        animation: none !important;
+    }
+
+    .sogreen-community-link-card,
+    .sogreen-community-knowledge-link {
+        transition: none !important;
+    }
+}
