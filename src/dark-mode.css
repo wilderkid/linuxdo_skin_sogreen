@@ -1,0 +1,432 @@
+/* Dark mode token and homepage surface layer. Loaded last on purpose. */
+
+html:is(.dark, .sogreen-dark) {
+    color-scheme: dark;
+
+    --bg-body: #181b18;
+    --bg-soft: #1b2a21;
+    --bg-card: #202520;
+    --border-card: #344139;
+
+    --text-title: #f2f6f2;
+    --text-desc: #cbd6cf;
+    --text-meta: #98a59d;
+
+    --c-accent-green: #5f8f6a;
+    --c-accent-green-deep: #a4d3aa;
+    --c-accent-pink: #d2848b;
+    --c-highlight-alpha: #a4d3aa;
+    --c-highlight-numeric: #ffb0b0;
+
+    --font-shadow: none;
+
+    --secondary: #181b18 !important;
+    --primary: var(--text-title) !important;
+    --primary-very-low: #242a25 !important;
+    --primary-low: #2e3731 !important;
+    --primary-low-mid: #536158 !important;
+    --primary-medium: #8b9a91 !important;
+    --primary-high: #c7d2ca !important;
+    --primary-very-high: #eaf0eb !important;
+    --header_background: #151815 !important;
+    --header_primary: var(--text-title) !important;
+    --tertiary: var(--c-accent-green-deep) !important;
+    --tertiary-hover: color-mix(in srgb, var(--c-accent-green-deep) 72%, #f8fbf8) !important;
+    --d-hover: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card)) !important;
+    --d-selected: color-mix(in srgb, var(--c-accent-green) 24%, var(--bg-card)) !important;
+    --d-selected-hover: color-mix(in srgb, var(--c-accent-green) 30%, var(--bg-card)) !important;
+    --d-header-background: var(--header_background) !important;
+    --d-content-background: var(--bg-body) !important;
+    --content-border-color: var(--border-card) !important;
+    --input-border-color: color-mix(in srgb, var(--border-card) 72%, var(--text-meta)) !important;
+    --title-color: var(--text-title) !important;
+    --excerpt-color: var(--text-desc) !important;
+    --metadata-color: var(--text-meta) !important;
+
+    --sogreen-dark-card-shadow:
+        0 10px 28px rgb(0 0 0 / 0.22),
+        0 0 0 1px color-mix(in srgb, var(--c-accent-green) 12%, transparent);
+    --sogreen-dark-card-glow:
+        0 0 10px color-mix(in srgb, var(--c-accent-green) 34%, transparent),
+        0 10px 26px rgb(0 0 0 / 0.18);
+    --sogreen-dark-hover-glow:
+        0 0 12px color-mix(in srgb, var(--c-accent-pink) 28%, transparent),
+        0 14px 30px rgb(0 0 0 / 0.24);
+}
+
+html:is(.dark, .sogreen-dark) body {
+    background: var(--bg-body) !important;
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) body *,
+html:is(.dark, .sogreen-dark) input,
+html:is(.dark, .sogreen-dark) button,
+html:is(.dark, .sogreen-dark) select,
+html:is(.dark, .sogreen-dark) textarea {
+    text-shadow: none !important;
+}
+
+html:is(.dark, .sogreen-dark) #main-outlet-wrapper,
+html:is(.dark, .sogreen-dark) #main-outlet,
+html:is(.dark, .sogreen-dark) .wrap,
+html:is(.dark, .sogreen-dark) .contents {
+    background: transparent !important;
+}
+
+html:is(.dark, .sogreen-dark) .d-header {
+    border-bottom-color: color-mix(in srgb, var(--border-card) 84%, var(--c-accent-green)) !important;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--header_background) 92%, var(--bg-card)), var(--header_background)) !important;
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--c-accent-green) 16%, transparent) !important;
+}
+
+html:is(.dark, .sogreen-dark) .d-header .d-icon,
+html:is(.dark, .sogreen-dark) .d-header a,
+html:is(.dark, .sogreen-dark) .d-header .header-sidebar-toggle button {
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .d-header .btn:hover,
+html:is(.dark, .sogreen-dark) .d-header .icon:hover {
+    background: color-mix(in srgb, var(--c-accent-green) 16%, transparent) !important;
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) .welcome-banner.--location-above-topic-content,
+html:is(.dark, .sogreen-dark) .custom-search-banner-wrap.welcome-banner__wrap {
+    background: transparent !important;
+}
+
+html:is(.dark, .sogreen-dark) .welcome-banner__title {
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) .welcome-banner__search-menu .search-input--welcome-banner {
+    border-color: color-mix(in srgb, var(--c-accent-green) 60%, var(--border-card)) !important;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--c-accent-green) 10%, transparent), transparent 58%),
+        color-mix(in srgb, var(--bg-card) 86%, var(--bg-soft)) !important;
+    box-shadow: var(--sogreen-dark-card-glow) !important;
+}
+
+html:is(.dark, .sogreen-dark) .welcome-banner__search-menu .search-input--welcome-banner:focus-within {
+    border-color: var(--c-accent-green-deep) !important;
+    background: color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
+    box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--c-accent-green) 18%, transparent),
+        0 0 22px color-mix(in srgb, var(--c-accent-green) 28%, transparent) !important;
+}
+
+html:is(.dark, .sogreen-dark) .welcome-banner__search-menu #welcome-banner-search-input,
+html:is(.dark, .sogreen-dark) .welcome-banner__search-menu .search-term__input {
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) .welcome-banner__search-menu #welcome-banner-search-input::placeholder,
+html:is(.dark, .sogreen-dark) .welcome-banner__search-menu .search-term__input::placeholder {
+    color: var(--text-meta) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-list tbody tr.topic-list-item,
+html:is(.dark, .sogreen-dark) body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id],
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item {
+    border-color: color-mix(in srgb, var(--c-accent-green) 54%, var(--border-card)) !important;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--c-accent-green) 7%, transparent), transparent 52%),
+        color-mix(in srgb, var(--bg-card) 94%, var(--bg-soft)) !important;
+    box-shadow: var(--sogreen-dark-card-glow) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-list-item.was-read {
+    border-color: var(--border-card) !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-list tbody tr.topic-list-item:hover,
+html:is(.dark, .sogreen-dark) body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id]:hover,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item:hover {
+    border-color: color-mix(in srgb, var(--c-accent-pink) 72%, var(--border-card)) !important;
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--c-accent-pink) 9%, transparent), transparent 46%),
+        color-mix(in srgb, var(--bg-card) 96%, var(--bg-soft)) !important;
+    box-shadow: var(--sogreen-dark-hover-glow) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-list .link-top-line > .title,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item .title,
+html:is(.dark, .sogreen-dark) body.categories-list .category-title-link,
+html:is(.dark, .sogreen-dark) body.categories-list .category-title-link .badge-category,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list .table-heading {
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-excerpt,
+html:is(.dark, .sogreen-dark) body.categories-list .category-description,
+html:is(.dark, .sogreen-dark) .topic-list .posts span {
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-list .posts,
+html:is(.dark, .sogreen-dark) .topic-list .views,
+html:is(.dark, .sogreen-dark) .topic-list .activity,
+html:is(.dark, .sogreen-dark) .topic-list .activity span,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item .topic-stats,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item .badge-posts,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item .topic-last-activity a {
+    color: var(--text-meta) !important;
+}
+
+html:is(.dark, .sogreen-dark) .discourse-tag,
+html:is(.dark, .sogreen-dark) .discourse-tags .discourse-tag {
+    border-color: color-mix(in srgb, var(--c-accent-green) 48%, var(--border-card)) !important;
+    background: color-mix(in srgb, var(--c-accent-green) 14%, var(--bg-card)) !important;
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .badge-wrapper.box,
+html:is(.dark, .sogreen-dark) .badge-category,
+html:is(.dark, .sogreen-dark) body.categories-list .subcategory .badge-category {
+    border-color: color-mix(in srgb, var(--category-badge-color, var(--c-accent-green)) 42%, var(--border-card)) !important;
+    background: color-mix(in srgb, var(--category-badge-color, var(--c-accent-green)) 14%, var(--bg-card)) !important;
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .badge-category .d-icon,
+html:is(.dark, .sogreen-dark) body.categories-list .category-title-link .badge-category .d-icon {
+    color: var(--category-badge-color, var(--c-accent-green-deep)) !important;
+}
+
+html:is(.dark, .sogreen-dark) body.categories-list .show-more .alert.alert-info.clickable,
+html:is(.dark, .sogreen-dark) body.categories-list .category-list.subcategories-with-subcategories tr[data-category-id] {
+    border-color: color-mix(in srgb, var(--c-accent-green) 38%, var(--border-card)) !important;
+    background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
+    color: var(--text-desc) !important;
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.16) !important;
+}
+
+html:is(.dark, .sogreen-dark) body.categories-list .category-logo,
+html:is(.dark, .sogreen-dark) .topic-list .posters img.avatar,
+html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item .topic-poster img.avatar {
+    border-color: color-mix(in srgb, var(--c-accent-green) 28%, var(--border-card)) !important;
+    background: var(--bg-soft) !important;
+}
+
+html:is(.dark, .sogreen-dark) body.categories-list td.topics .value {
+    color: var(--c-accent-green-deep) !important;
+}
+
+html:is(.dark, .sogreen-dark) body.categories-list td.topics .unit,
+html:is(.dark, .sogreen-dark) body.categories-list .muted-categories-heading {
+    color: var(--text-meta) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-wrapper {
+    background: transparent !important;
+}
+
+html:is(.dark, .sogreen-dark) #d-sidebar.sidebar-container,
+html:is(.dark, .sogreen-dark) .sidebar-container {
+    border-color: var(--border-card) !important;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-card) 96%, var(--bg-soft)), var(--bg-card)) !important;
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--border-card) 84%, var(--c-accent-green)),
+        0 12px 28px rgb(0 0 0 / 0.18) !important;
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-custom-sections,
+html:is(.dark, .sogreen-dark) .sidebar-section-wrapper,
+html:is(.dark, .sogreen-dark) .sidebar-footer-wrapper {
+    border-color: var(--border-card) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-section-header,
+html:is(.dark, .sogreen-dark) .sidebar-section-link,
+html:is(.dark, .sogreen-dark) .sidebar-theme-toggle-dropdown .name {
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-section-header:hover,
+html:is(.dark, .sogreen-dark) .sidebar-section-header-wrapper:hover .sidebar-section-header,
+html:is(.dark, .sogreen-dark) .sidebar-section-link:hover,
+html:is(.dark, .sogreen-dark) .sidebar-more-section-trigger:hover {
+    border-color: color-mix(in srgb, var(--c-accent-green) 52%, var(--border-card)) !important;
+    background: color-mix(in srgb, var(--c-accent-green) 13%, var(--bg-card)) !important;
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-section-link.active,
+html:is(.dark, .sogreen-dark) .sidebar-section-link[aria-current="page"] {
+    border-color: color-mix(in srgb, var(--c-accent-green) 62%, var(--border-card)) !important;
+    border-left-color: var(--c-accent-green-deep) !important;
+    background: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card)) !important;
+    color: var(--c-accent-green-deep) !important;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-accent-green) 26%, transparent) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-section-link-prefix.icon,
+html:is(.dark, .sogreen-dark) .sidebar__panel-switch-button,
+html:is(.dark, .sogreen-dark) .sidebar-footer-container,
+html:is(.dark, .sogreen-dark) .sidebar-footer-actions-button,
+html:is(.dark, .sogreen-dark) .sidebar-theme-toggle__wrapper {
+    border-color: var(--border-card) !important;
+    background: color-mix(in srgb, var(--bg-card) 78%, var(--bg-soft)) !important;
+    color: var(--text-meta) !important;
+}
+
+html:is(.dark, .sogreen-dark) .sidebar-section-link:hover .sidebar-section-link-prefix.icon,
+html:is(.dark, .sogreen-dark) .sidebar-section-link.active .sidebar-section-link-prefix.icon,
+html:is(.dark, .sogreen-dark) .sidebar-section-link[aria-current="page"] .sidebar-section-link-prefix.icon,
+html:is(.dark, .sogreen-dark) .sidebar__panel-switch-button:hover,
+html:is(.dark, .sogreen-dark) .sidebar-footer-actions-button:hover,
+html:is(.dark, .sogreen-dark) .sidebar-theme-toggle__wrapper:hover {
+    border-color: var(--c-accent-green) !important;
+    background: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card)) !important;
+    color: var(--c-accent-green-deep) !important;
+}
+
+html:is(.dark, .sogreen-dark) input,
+html:is(.dark, .sogreen-dark) textarea,
+html:is(.dark, .sogreen-dark) select,
+html:is(.dark, .sogreen-dark) .select-kit-header,
+html:is(.dark, .sogreen-dark) .select-kit-body,
+html:is(.dark, .sogreen-dark) .combo-box .combo-box-header,
+html:is(.dark, .sogreen-dark) .filter-input {
+    border-color: color-mix(in srgb, var(--border-card) 78%, var(--c-accent-green)) !important;
+    background: color-mix(in srgb, var(--bg-card) 84%, var(--bg-soft)) !important;
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) input::placeholder,
+html:is(.dark, .sogreen-dark) textarea::placeholder {
+    color: var(--text-meta) !important;
+}
+
+html:is(.dark, .sogreen-dark) .nav-pills .btn,
+html:is(.dark, .sogreen-dark) .list-controls .btn,
+html:is(.dark, .sogreen-dark) .navigation-controls .btn,
+html:is(.dark, .sogreen-dark) .btn-default {
+    border-color: var(--border-card) !important;
+    background: color-mix(in srgb, var(--bg-card) 82%, var(--bg-soft)) !important;
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .nav-pills .btn:hover,
+html:is(.dark, .sogreen-dark) .list-controls .btn:hover,
+html:is(.dark, .sogreen-dark) .navigation-controls .btn:hover,
+html:is(.dark, .sogreen-dark) .btn-default:hover {
+    border-color: var(--c-accent-green) !important;
+    background: color-mix(in srgb, var(--c-accent-green) 14%, var(--bg-card)) !important;
+    color: var(--text-title) !important;
+}
+
+html:is(.dark, .sogreen-dark) .btn-primary,
+html:is(.dark, .sogreen-dark) .btn-primary .d-icon {
+    color: #111827 !important;
+}
+
+html:is(.dark, .sogreen-dark) .container.posts,
+html:is(.dark, .sogreen-dark) article[id^="post_"],
+html:is(.dark, .sogreen-dark) .more-topics__container {
+    border-color: var(--border-card) !important;
+    background: var(--bg-card) !important;
+    box-shadow: var(--sogreen-dark-card-shadow) !important;
+}
+
+html:is(.dark, .sogreen-dark) .more-topics__container .nav-pills {
+    border-bottom-color: var(--border-card) !important;
+}
+
+html:is(.dark, .sogreen-dark) .more-topics__container .nav-pills .btn {
+    background: transparent !important;
+    border-color: transparent !important;
+}
+
+html:is(.dark, .sogreen-dark) .more-topics__container .nav-pills .btn:hover,
+html:is(.dark, .sogreen-dark) .more-topics__container .nav-pills .btn.active {
+    color: var(--c-accent-green-deep) !important;
+    border-bottom-color: var(--c-accent-green-deep) !important;
+}
+
+html:is(.dark, .sogreen-dark) .cooked a {
+    color: var(--c-accent-green-deep) !important;
+}
+
+html:is(.dark, .sogreen-dark) .cooked a:hover {
+    border-bottom-color: var(--c-accent-green-deep) !important;
+}
+
+html:is(.dark, .sogreen-dark) .cooked blockquote {
+    border-left-color: var(--c-accent-green) !important;
+    background: color-mix(in srgb, var(--c-accent-green) 13%, var(--bg-card)) !important;
+    color: var(--text-desc) !important;
+}
+
+html:is(.dark, .sogreen-dark) .cooked pre,
+html:is(.dark, .sogreen-dark) .cooked details {
+    border-color: var(--border-card) !important;
+    background: color-mix(in srgb, var(--bg-card) 78%, var(--bg-soft)) !important;
+}
+
+html:is(.dark, .sogreen-dark) .cooked code {
+    background: color-mix(in srgb, var(--c-accent-pink) 18%, var(--bg-card)) !important;
+    color: #ffd0d0 !important;
+}
+
+html:is(.dark, .sogreen-dark) .cooked pre code {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+html:is(.dark, .sogreen-dark) .menu-panel,
+html:is(.dark, .sogreen-dark) .dropdown-menu,
+html:is(.dark, .sogreen-dark) .user-menu,
+html:is(.dark, .sogreen-dark) .hamburger-panel,
+html:is(.dark, .sogreen-dark) .search-menu {
+    border-color: var(--border-card) !important;
+    background: var(--bg-card) !important;
+    color: var(--text-desc) !important;
+    box-shadow: 0 18px 44px rgb(0 0 0 / 0.32) !important;
+}
+
+html.sogreen-dark body.search-page {
+    --search-cyan-wash: color-mix(in srgb, var(--c-accent-green) 20%, var(--bg-card));
+    --search-pink-wash: color-mix(in srgb, var(--c-accent-pink) 18%, var(--bg-card));
+    --search-soft-line: color-mix(in srgb, var(--border-card) 72%, var(--c-accent-green));
+}
+
+html.sogreen-dark body.search-page .search-header,
+html.sogreen-dark body.search-page .search-advanced > .search-info,
+html.sogreen-dark body.search-page .fps-result {
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--c-accent-green) 8%, transparent), transparent 54%),
+        color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
+}
+
+html.sogreen-dark body.search-page .full-page-search.search-query,
+html.sogreen-dark body.search-page .search-advanced-filters input.ember-text-field,
+html.sogreen-dark body.search-page .search-advanced-filters input[type="date"],
+html.sogreen-dark body.search-page .search-advanced-filters input[type="number"],
+html.sogreen-dark body.search-page .select-kit-header,
+html.sogreen-dark body.search-page .semantic-search__container.search-results,
+html.sogreen-dark body.search-page .search-advanced-filters {
+    background: color-mix(in srgb, var(--bg-card) 84%, var(--bg-soft)) !important;
+}
+
+html.sogreen-dark body.search-page .search-bar .search-cta,
+html.sogreen-dark body.search-page .search-container .btn-primary,
+html.sogreen-dark body.search-page .search-bar .search-cta:hover,
+html.sogreen-dark body.search-page .search-bar .search-cta:focus-visible {
+    color: #111827 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:is(.dark, .sogreen-dark) .topic-list tbody tr.topic-list-item,
+    html:is(.dark, .sogreen-dark) body.categories-list .column.categories > .category-list:not(.hidden) > tbody > tr[data-category-id],
+    html:is(.dark, .sogreen-dark) body.categories-list .latest-topic-list-item {
+        transition: none !important;
+    }
+}

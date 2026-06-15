@@ -24,6 +24,7 @@ const HIGHLIGHT_TARGET_SELECTOR = [
     '.user-preferences-page section.collapsed-info.about',
     '.user-preferences-page .user-navigation',
     '.user-preferences-page .user-preferences',
+    '.search-page .search-container',
     '#d-sidebar .sidebar-section-header-text',
     '#d-sidebar .sidebar-section-link-content-text',
     '#d-sidebar .sidebar-theme-toggle-dropdown .name',
