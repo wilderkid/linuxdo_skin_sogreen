@@ -59,3 +59,10 @@
 ## 📝 反馈与建议
 
 如果您在使用过程中遇到任何问题，或有任何功能建议，欢迎通过 Greasy Fork 的反馈系统或在本脚本的[发布帖](https://linux.do/t/topic/YOUR_TOPIC_ID)下进行留言。
+
+---
+
+## 友情链接
+
+* [LINUX DO](https://linux.do/)
+* [WildKid 的 LINUX DO 主页](https://linux.do/u/wildkid/summary)
