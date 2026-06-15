@@ -64,5 +64,5 @@
 
 ## 友情链接
 
-* 本项目积极参与并认可 [linux.do社区](linux.do)
+* 本项目积极参与并认可 [linux.do社区](https://linux.do/)
 * [WildKid 的 LINUX DO 主页](https://linux.do/u/wildkid/summary)
