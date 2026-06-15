@@ -4,7 +4,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 一款为 [LINUX DO](https://linux.do/) 论坛设计的现代化美化脚本，致力于提供极致简洁、清爽、高效的阅读和浏览体验。
-![认可linux.do](upload://SyWms4BeQx1dMntq759YGLTjOU.svg)
 
 ---
 
@@ -65,5 +64,5 @@
 
 ## 友情链接
 
-* [LINUX DO](https://linux.do/)
+* 本项目积极参与并认可 [linux.do社区](linux.do)
 * [WildKid 的 LINUX DO 主页](https://linux.do/u/wildkid/summary)
