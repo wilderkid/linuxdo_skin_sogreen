@@ -1,4 +1,17 @@
 const SOGREEN_DARK_CLASS = 'sogreen-dark';
+const THEME_TOGGLE_SELECTOR = [
+    '.sidebar-footer-actions-button',
+    '.sidebar-theme-toggle',
+    '.sidebar-theme-toggle-dropdown',
+    'button[aria-label*="color"]',
+    'button[title*="color"]',
+    'button[aria-label*="theme"]',
+    'button[title*="theme"]',
+    'button[aria-label*="暗"]',
+    'button[aria-label*="浅"]',
+    'button[aria-label*="Dark"]',
+    'button[aria-label*="Light"]'
+].join(', ');
 
 function getSchemeType() {
     return getComputedStyle(document.documentElement)
@@ -35,21 +48,38 @@ function getActiveSchemeFromLinks() {
 }
 
 function isDarkModeActive() {
+    const html = document.documentElement;
+    const body = document.body;
+
+    if (html.classList.contains('dark') || body?.classList.contains('dark')) return true;
+
+    const schemeType = getSchemeType();
+    if (schemeType === 'dark') return true;
+    if (schemeType === 'light') return false;
+
     const setup = document.getElementById('data-discourse-setup');
     const setupFlag = setup?.dataset?.colorSchemeIsDark;
-    const schemeType = getSchemeType();
-    const linkScheme = getActiveSchemeFromLinks();
+    if (setupFlag === 'true') return true;
+    if (setupFlag === 'false') return false;
 
+    const colorScheme = `${html.style.colorScheme || ''} ${getComputedStyle(html).colorScheme || ''}`;
+    if (/\bdark\b/i.test(colorScheme) && !/\blight\b/i.test(colorScheme)) return true;
+    if (/\blight\b/i.test(colorScheme) && !/\bdark\b/i.test(colorScheme)) return false;
+
+    const linkScheme = getActiveSchemeFromLinks();
     if (linkScheme !== null) return linkScheme;
-    if (document.documentElement.classList.contains('dark')) return true;
-    if (setupFlag === 'true' || schemeType === 'dark') return true;
-    if (setupFlag === 'false' || schemeType === 'light') return false;
 
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function syncDarkClass() {
     document.documentElement.classList.toggle(SOGREEN_DARK_CLASS, isDarkModeActive());
+}
+
+function scheduleThemeSync() {
+    syncDarkClass();
+    requestAnimationFrame(syncDarkClass);
+    [50, 150, 300, 600, 1000].forEach((delay) => setTimeout(syncDarkClass, delay));
 }
 
 let isSetup = false;
@@ -66,14 +96,35 @@ export function setupDarkModeSync() {
         attributeFilter: ['class', 'style', 'data-theme', 'data-color-scheme']
     });
 
+    if (document.body) {
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class', 'style', 'data-theme', 'data-color-scheme']
+        });
+    }
+
     if (document.head) {
         observer.observe(document.head, {
             childList: true,
             subtree: true,
             attributes: true,
-            attributeFilter: ['media', 'disabled', 'data-color-scheme-is-dark']
+            attributeFilter: ['media', 'disabled', 'data-color-scheme-is-dark', 'class']
         });
     }
+
+    const setup = document.getElementById('data-discourse-setup');
+    if (setup) {
+        observer.observe(setup, {
+            attributes: true,
+            attributeFilter: ['data-color-scheme-is-dark']
+        });
+    }
+
+    document.addEventListener('click', (event) => {
+        if (event.target.closest(THEME_TOGGLE_SELECTOR)) {
+            scheduleThemeSync();
+        }
+    }, true);
 
     const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
     if (darkMedia.addEventListener) {
