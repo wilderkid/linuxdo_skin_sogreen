@@ -1,11 +1,26 @@
+const CONTAINER_SELECTOR = '.more-topics__container';
+const NATIVE_TABS_SELECTOR = '.topic-list-header.--has-tabs';
+const TABS_READY_KEY = 'sogreenMoreTopicsTabsReady';
+
+function hasNativeTabs(container) {
+    return Boolean(container.querySelector(NATIVE_TABS_SELECTOR));
+}
+
 export function initMoreTopicsTabs() {
-    const moreTopicsContainer = document.querySelector('.more-topics__container');
+    const moreTopicsContainer = document.querySelector(CONTAINER_SELECTOR);
     if (!moreTopicsContainer) return;
+
+    // 新版 Discourse 的 推荐/相关 标签由站点原生渲染与切换，脚本不再接管
+    if (hasNativeTabs(moreTopicsContainer)) return;
+    if (moreTopicsContainer.dataset[TABS_READY_KEY] === 'true') return;
 
     const tabs = moreTopicsContainer.querySelectorAll('.nav-pills .btn');
     const tabContents = moreTopicsContainer.querySelectorAll('.topic-list');
 
-    if (!tabs.length || !tabContents.length) return;
+    // 旧版布局：多个 topic-list 表格对应多个标签，才需要脚本切换
+    if (tabs.length < 2 || tabContents.length < 2) return;
+
+    moreTopicsContainer.dataset[TABS_READY_KEY] = 'true';
 
     tabs.forEach((tab, index) => {
         tab.addEventListener('click', () => {
@@ -20,13 +35,10 @@ export function initMoreTopicsTabs() {
             }
         });
     });
-
-    // 默认显示第一个标签内容
-    if (tabs[0]) tabs[0].click();
 }
 
 export function moveMoreTopicsList() {
-    const container = document.querySelector('.more-topics__container');
+    const container = document.querySelector(CONTAINER_SELECTOR);
     if (container) {
         const row = container.querySelector('.row');
         if (row) {

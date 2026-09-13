@@ -10,11 +10,16 @@ export function applyCustomFont() {
     const styleId = 'custom-font-override';
     let styleElement = document.getElementById(styleId);
 
-    // 如果样式标签不存在，则创建并添加到 head
+    // 如果样式标签不存在，则创建并添加到 head（document-start 时可能尚无 head）
     if (!styleElement) {
+        const parent = document.head || document.documentElement;
+        if (!parent) {
+            document.addEventListener('DOMContentLoaded', applyCustomFont, { once: true });
+            return;
+        }
         styleElement = document.createElement('style');
         styleElement.id = styleId;
-        document.head.appendChild(styleElement);
+        parent.appendChild(styleElement);
     }
 
     // 更新样式标签的内容，以最高优先级覆盖字体变量

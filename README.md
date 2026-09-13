@@ -1,6 +1,6 @@
 # LINUX DO - Modern Clean Card (极简清爽版)
 
-[![Greasy Fork](https://img.shields.io/greasyfork/v/YOUR_SCRIPT_ID.svg)](https://greasyfork.org/scripts/YOUR_SCRIPT_ID)
+[![Greasy Fork](https://img.shields.io/greasyfork/v/557640.svg)](https://greasyfork.org/scripts/557640)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 一款为 [LINUX DO](https://linux.do/) 论坛设计的现代化美化脚本，致力于提供极致简洁、清爽、高效的阅读和浏览体验。
@@ -58,7 +58,7 @@
 
 ## 📝 反馈与建议
 
-如果您在使用过程中遇到任何问题，或有任何功能建议，欢迎通过 Greasy Fork 的反馈系统或在本脚本的[发布帖](https://linux.do/t/topic/YOUR_TOPIC_ID)下进行留言。
+如果您在使用过程中遇到任何问题，或有任何功能建议，欢迎通过 Greasy Fork 的反馈系统或在本脚本的[发布帖](https://linux.do/t/topic/2408009)下进行留言。
 
 ---
 

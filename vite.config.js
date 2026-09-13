@@ -11,7 +11,7 @@ export default defineConfig({
         namespace: 'http://tampermonkey.net/',
         version: '12.0',
         description: 'LINUX DO 论坛美化：严格的扁平化卡片布局 + 极简白底 + [青/粉]微点缀 + 强制“花枝丸”字体。',
-        author: 'YourName',
+        author: 'WildKid',
         match: 'https://linux.do/*',
         icon: 'https://linux.do/uploads/default/optimized/4X/c/c/d/ccd8c210609d498cbeb3d5201d4c259348447562_2_32x32.png',
         grant: [

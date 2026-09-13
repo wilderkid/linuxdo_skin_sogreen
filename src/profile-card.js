@@ -1,8 +1,7 @@
 const PROFILE_CARD_CLASS = 'sogreen-profile-expanded-card';
-const PROFILE_CARD_STATE_KEY = 'sogreenProfileCardExpanded';
 const PROFILE_SOURCE_HIDDEN_CLASS = 'sogreen-profile-source-hidden';
 const PROFILE_FACTS_CLASS = 'sogreen-profile-facts';
-const PROFILE_SECTION_SELECTOR = 'body.user-summary-page section.about';
+const PROFILE_SECTION_SELECTOR = 'section.about';
 const PROFILE_TOGGLE_SELECTOR = '.user-profile-toggle-btn';
 const PROFILE_PANEL_SELECTOR = '#collapsed-info-panel, [id^="collapsed-info-panel"]';
 const PROFILE_FACTS = [
@@ -17,6 +16,14 @@ const PROFILE_FACTS = [
     { key: 'followers', label: '关注者' },
     { key: 'points', label: '点数' }
 ];
+const TRUST_LEVEL_NAMES = ['新用户', '基本用户', '成员', '常规用户', '领导者'];
+const PRELOADED_USERS_CACHE = { source: null, text: '', username: '', user: null };
+let lastProfileKey = '';
+
+function getViewedUsername() {
+    const match = window.location.pathname.match(/^\/u\/([^/]+)/i);
+    return match ? decodeURIComponent(match[1]) : '';
+}
 
 function isPanelOpen(panel) {
     if (!panel) return false;
@@ -28,22 +35,25 @@ function isPanelOpen(panel) {
 }
 
 function isProfileExpanded(section) {
-    if (section.classList.contains(PROFILE_CARD_CLASS)) return true;
-
     const toggle = section.querySelector(PROFILE_TOGGLE_SELECTOR);
-    const controlledPanelId = toggle?.getAttribute('aria-controls');
-    const controlledPanel = controlledPanelId ? document.getElementById(controlledPanelId) : null;
-    const panel = controlledPanel || section.querySelector(PROFILE_PANEL_SELECTOR);
-    const hasExpandedIcon = Boolean(toggle?.querySelector('.d-icon-angles-up, use[href$="#angles-up"]'));
-    const saysCollapse = toggle?.textContent?.includes('\u6536\u8d77') || toggle?.getAttribute('aria-label')?.includes('\u6536\u8d77');
-    return toggle?.getAttribute('aria-expanded') === 'true' || hasExpandedIcon || saysCollapse || isPanelOpen(panel);
-}
+    if (!toggle) return !section.classList.contains('collapsed-info');
 
-function getManualState(section) {
-    const value = section.dataset[PROFILE_CARD_STATE_KEY];
-    if (value === 'true') return true;
-    if (value === 'false') return false;
-    return null;
+    const aria = toggle.getAttribute('aria-expanded');
+    if (aria === 'true') return true;
+    if (aria === 'false') return false;
+
+    const hasExpandedIcon = Boolean(toggle.querySelector('.d-icon-angles-up, use[href$="#angles-up"]'));
+    const hasCollapsedIcon = Boolean(toggle.querySelector('.d-icon-angles-down, use[href$="#angles-down"]'));
+    if (hasExpandedIcon) return true;
+    if (hasCollapsedIcon) return false;
+
+    const label = `${toggle.textContent || ''} ${toggle.getAttribute('aria-label') || ''}`;
+    if (label.includes('\u6536\u8d77')) return true;
+    if (label.includes('\u5c55\u5f00')) return false;
+
+    const controlledPanelId = toggle.getAttribute('aria-controls');
+    const panel = (controlledPanelId && document.getElementById(controlledPanelId)) || section.querySelector(PROFILE_PANEL_SELECTOR);
+    return isPanelOpen(panel);
 }
 
 function normalizeText(text) {
@@ -211,51 +221,78 @@ function collectProfileFacts(source) {
         .filter(Boolean);
 }
 
-function getFactsSignature(facts) {
-    return facts.map((fact) => `${fact.key}:${fact.text}`).join('|');
-}
+function getPreloadedUser() {
+    const el = document.getElementById('data-preloaded');
+    const viewed = getViewedUsername().toLowerCase();
+    if (!el || !viewed) return null;
 
-function getFactsMount(section) {
-    return section.querySelector('.details .primary') || section.querySelector('.details') || section;
-}
-
-function removeProfileFacts(section) {
-    section.querySelector(`.${PROFILE_FACTS_CLASS}`)?.remove();
-    const source = getProfileDataSource(section);
-    if (source && source !== section) {
-        source.classList.remove(PROFILE_SOURCE_HIDDEN_CLASS);
-    }
-}
-
-function renderProfileFacts(section) {
-    const source = getProfileDataSource(section);
-    const facts = collectProfileFacts(source);
-
-    if (!facts.length) {
-        removeProfileFacts(section);
-        return;
+    const text = el.textContent || '';
+    if (
+        PRELOADED_USERS_CACHE.source === el &&
+        PRELOADED_USERS_CACHE.text === text &&
+        PRELOADED_USERS_CACHE.username === viewed
+    ) {
+        return PRELOADED_USERS_CACHE.user;
     }
 
-    const mount = getFactsMount(section);
-    let card = mount.querySelector(`:scope > .${PROFILE_FACTS_CLASS}`);
-    const signature = getFactsSignature(facts);
-
-    if (card?.dataset.signature === signature) {
-        if (source && source !== section && !source.contains(card)) {
-            source.classList.add(PROFILE_SOURCE_HIDDEN_CLASS);
+    let user = null;
+    try {
+        const data = JSON.parse(text);
+        const key = Object.keys(data).find((name) => name.toLowerCase() === `user_${viewed}`);
+        if (key) {
+            user = JSON.parse(data[key]).user || null;
         }
-        return;
+    } catch {
+        user = null;
     }
 
-    if (!card) {
-        card = document.createElement('div');
-        card.className = PROFILE_FACTS_CLASS;
-        mount.appendChild(card);
-    }
+    PRELOADED_USERS_CACHE.source = el;
+    PRELOADED_USERS_CACHE.text = text;
+    PRELOADED_USERS_CACHE.username = viewed;
+    PRELOADED_USERS_CACHE.user = user;
+    return user;
+}
 
-    card.dataset.signature = signature;
-    card.replaceChildren();
+function formatDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return `${date.getMonth() + 1}月 ${date.getDate()} 日`;
+}
 
+function formatRelativeTime(value) {
+    const time = new Date(value).getTime();
+    if (!Number.isFinite(time)) return '';
+
+    const diff = Date.now() - time;
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+
+    if (diff < minute) return '刚刚';
+    if (diff < hour) return `${Math.floor(diff / minute)} 分钟`;
+    if (diff < day) return `${Math.floor(diff / hour)} 小时`;
+    if (diff < 30 * day) return `${Math.floor(diff / day)} 天`;
+    return formatDate(value);
+}
+
+function getActivityFacts(user) {
+    if (!user) return [];
+
+    const definitions = [
+        { key: 'joined', label: '加入日期', value: formatDate(user.created_at) },
+        { key: 'last-post', label: '最后一个帖子', value: formatRelativeTime(user.last_posted_at) },
+        { key: 'last-seen', label: '最后活动', value: formatRelativeTime(user.last_seen_at) },
+        { key: 'views', label: '浏览量', value: user.profile_view_count },
+        { key: 'trust-level', label: '信任级别', value: TRUST_LEVEL_NAMES[user.trust_level] || '' },
+        { key: 'points', label: '点数', value: user.gamification_score }
+    ];
+
+    return definitions
+        .filter((fact) => fact.value !== undefined && fact.value !== null && fact.value !== '')
+        .map((fact) => ({ ...fact, text: String(fact.value) }));
+}
+
+function buildFactsTable(facts) {
     const table = document.createElement('table');
     const tbody = document.createElement('tbody');
     table.className = 'sogreen-profile-facts-table';
@@ -271,14 +308,98 @@ function renderProfileFacts(section) {
         value.className = 'sogreen-profile-fact-value';
         label.scope = 'row';
         label.textContent = fact.label;
-        value.appendChild(fact.fragment.cloneNode(true));
+
+        if (fact.fragment) {
+            value.appendChild(fact.fragment.cloneNode(true));
+        } else {
+            value.textContent = fact.text;
+        }
 
         item.append(label, value);
         tbody.appendChild(item);
     });
 
     table.appendChild(tbody);
-    card.appendChild(table);
+    return table;
+}
+
+function getFactsSignature(facts) {
+    return facts.map((fact) => `${fact.key}:${fact.text}`).join('|');
+}
+
+function getProfileKey() {
+    return window.location.pathname.replace(/\/+$/, '').toLowerCase();
+}
+
+function getFactsMount(section) {
+    return section.querySelector('.details .primary') || section.querySelector('.details') || section;
+}
+
+function resetInjectedProfileCards() {
+    PRELOADED_USERS_CACHE.source = null;
+    PRELOADED_USERS_CACHE.text = '';
+    PRELOADED_USERS_CACHE.username = '';
+    PRELOADED_USERS_CACHE.user = null;
+
+    document.querySelectorAll(`.${PROFILE_FACTS_CLASS}`).forEach((card) => card.remove());
+    document.querySelectorAll(`.${PROFILE_SOURCE_HIDDEN_CLASS}`).forEach((el) => {
+        el.classList.remove(PROFILE_SOURCE_HIDDEN_CLASS);
+    });
+    document.querySelectorAll(`section.about.${PROFILE_CARD_CLASS}`).forEach((section) => {
+        section.classList.remove(PROFILE_CARD_CLASS);
+    });
+}
+
+function removeProfileFacts(section) {
+    section.querySelector(`.${PROFILE_FACTS_CLASS}`)?.remove();
+    const source = getProfileDataSource(section);
+    if (source && source !== section) {
+        source.classList.remove(PROFILE_SOURCE_HIDDEN_CLASS);
+    }
+}
+
+function renderProfileFacts(section) {
+    const source = getProfileDataSource(section);
+    let facts = collectProfileFacts(source);
+
+    if (!facts.length) {
+        const user = getPreloadedUser();
+        const viewed = getViewedUsername().toLowerCase();
+        const matches = Boolean(user && viewed) && String(user.username || '').toLowerCase() === viewed;
+        facts = matches ? getActivityFacts(user) : [];
+    }
+
+    if (!facts.length) {
+        removeProfileFacts(section);
+        return;
+    }
+
+    const mount = getFactsMount(section);
+    let card = mount.querySelector(`:scope > .${PROFILE_FACTS_CLASS}`);
+    const signature = getFactsSignature(facts);
+
+    const viewed = getViewedUsername().toLowerCase();
+    if (card && card.dataset.username && card.dataset.username !== viewed) {
+        card.remove();
+        card = null;
+    }
+
+    if (card?.dataset.signature === signature && card.dataset.username === viewed) {
+        if (source && source !== section && !source.contains(card)) {
+            source.classList.add(PROFILE_SOURCE_HIDDEN_CLASS);
+        }
+        return;
+    }
+
+    if (!card) {
+        card = document.createElement('div');
+        card.className = PROFILE_FACTS_CLASS;
+        mount.appendChild(card);
+    }
+
+    card.dataset.signature = signature;
+    card.dataset.username = viewed;
+    card.replaceChildren(buildFactsTable(facts));
 
     if (source && source !== section && !source.contains(card)) {
         source.classList.add(PROFILE_SOURCE_HIDDEN_CLASS);
@@ -287,8 +408,7 @@ function renderProfileFacts(section) {
 
 function syncProfileSection(section) {
     if (!section) return;
-    const manualState = getManualState(section);
-    const expanded = manualState ?? isProfileExpanded(section);
+    const expanded = isProfileExpanded(section);
     section.classList.toggle(PROFILE_CARD_CLASS, expanded);
 
     if (expanded) {
@@ -299,6 +419,12 @@ function syncProfileSection(section) {
 }
 
 export function syncUserProfileCard() {
+    const profileKey = getProfileKey();
+    if (profileKey !== lastProfileKey) {
+        lastProfileKey = profileKey;
+        resetInjectedProfileCards();
+    }
+
     document.querySelectorAll(PROFILE_SECTION_SELECTOR).forEach(syncProfileSection);
 }
 
@@ -314,28 +440,51 @@ export function setupUserProfileCardObserver() {
         });
     };
 
+    const scheduleRouteSync = () => {
+        setTimeout(scheduleSync, 0);
+        setTimeout(scheduleSync, 80);
+        setTimeout(scheduleSync, 200);
+        setTimeout(scheduleSync, 500);
+    };
+
+    lastProfileKey = getProfileKey();
     syncUserProfileCard();
 
     document.addEventListener('click', (event) => {
         const toggle = event.target.closest(PROFILE_TOGGLE_SELECTOR);
         if (!toggle) return;
-
-        const section = toggle.closest('section.about');
-        if (!section) return;
-
-        const willExpand = !(section.classList.contains(PROFILE_CARD_CLASS) || isProfileExpanded(section));
-        setTimeout(() => {
-            section.dataset[PROFILE_CARD_STATE_KEY] = String(willExpand);
-            section.classList.toggle(PROFILE_CARD_CLASS, willExpand);
-            scheduleSync();
-        }, 80);
+        if (!toggle.closest('section.about')) return;
+        scheduleRouteSync();
     }, true);
 
-    const observer = new MutationObserver(scheduleSync);
+    window.addEventListener('popstate', scheduleRouteSync);
+
+    const historyMethods = ['pushState', 'replaceState'];
+    historyMethods.forEach((method) => {
+        const original = history[method];
+        history[method] = function patchedHistory() {
+            const result = original.apply(this, arguments);
+            scheduleRouteSync();
+            return result;
+        };
+    });
+
+    const observer = new MutationObserver((mutations) => {
+        const routeChanged = getProfileKey() !== lastProfileKey;
+        const relevant = routeChanged || mutations.some((mutation) => {
+            if (mutation.type === 'childList') return true;
+            const target = mutation.target;
+            return target instanceof Element && (
+                target.matches?.('section.about, .user-profile-toggle-btn, #collapsed-info-panel') ||
+                target.closest?.('section.about')
+            );
+        });
+        if (relevant) scheduleSync();
+    });
     observer.observe(document.body, {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: ['aria-expanded', 'hidden', 'class', 'style']
+        attributeFilter: ['aria-expanded', 'hidden', 'class']
     });
 }
