@@ -1,0 +1,4 @@
+- Prefers to run verification/tests themselves rather than have the agent do it — after the code change is complete, stop building elaborate repro/rendering setups (e.g. headless-browser screenshot harnesses) and hand off. Confidence: 0.92
+- Explicitly divides labor as "agent only edits code, user checks the final result" — so treat building/rendering/visual verification as out of scope unless asked. Confidence: 0.9
+- Values a short handoff that states what changed (which files), what remains unverified, and hints for how they can check it, instead of the agent attempting to prove correctness. Confidence: 0.8
+- 方案卡住时更愿意「换策略」而不是继续在同一实现上反复调试：当某个做法几次都没解决，会主动提出换一种完全不同的实现方式。Confidence: 0.75

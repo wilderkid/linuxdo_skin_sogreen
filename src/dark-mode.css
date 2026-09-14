@@ -401,6 +401,10 @@ html:is(.dark, .sogreen-dark) .topic-post .cooked aside.onebox .onebox-body h4 a
     color: var(--text-title) !important;
 }
 
+html:is(.dark, .sogreen-dark) .topic-post .cooked aside.onebox.githubrepo .github-row > img.thumbnail {
+    background: var(--bg-soft) !important;
+}
+
 html:is(.dark, .sogreen-dark) .menu-panel,
 html:is(.dark, .sogreen-dark) .dropdown-menu,
 html:is(.dark, .sogreen-dark) .user-menu,

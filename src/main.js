@@ -12,7 +12,6 @@ import { setupCommunityOrbitObserver, syncCommunityOrbitPage } from './community
 import { setupDarkModeSync } from './theme-sync';
 
 function initSogreenUI() {
-    setupDarkModeSync();
     runHighlight();
     setupObserver();
     initMoreTopicsTabs();

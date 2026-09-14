@@ -1513,7 +1513,7 @@ article[id^="post_"] {
 }
 /* 移除图片父容器在悬停时的默认阴影 */
 .topic-post .cooked a:has(> img:not(.emoji)):hover,
-.topic-post .cooked div:has(> img:not(.emoji)):hover {
+.topic-post .cooked div:not(.github-row):has(> img:not(.emoji)):hover {
     box-shadow: none !important;
     background: none !important;
 }
@@ -1700,6 +1700,174 @@ article[id^="post_"] {
     .topic-post .cooked aside.onebox .aspect-image img {
         height: 160px !important;
         min-height: 160px;
+    }
+}
+
+
+/* ==========================================================================
+   8.1 GitHub repo onebox: thumbnail left, title and description right
+   ========================================================================== */
+
+.topic-post .cooked aside.onebox.githubrepo {
+    display: block !important;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--onebox-border);
+}
+
+.topic-post .cooked aside.onebox.githubrepo:hover {
+    border-color: color-mix(in srgb, var(--c-accent-green) 62%, var(--border-card));
+}
+
+.topic-post .cooked aside.onebox.githubrepo .onebox-body {
+    display: block;
+    padding: 0 !important;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .github-row {
+    display: grid;
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    grid-template-areas:
+        "thumb title"
+        "thumb excerpt";
+    align-items: start;
+    gap: 6px 18px;
+    margin: 0 !important;
+    padding: 16px !important;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .github-row > img.thumbnail,
+.topic-post .cooked aside.onebox.githubrepo .github-row > .aspect-image {
+    grid-area: thumb;
+    display: block !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    aspect-ratio: 16 / 10 !important;
+    overflow: hidden;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .github-row > .aspect-image img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    object-fit: cover !important;
+    object-position: center top;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .github-row > img.github-avatar {
+    grid-area: title;
+    align-self: start;
+    justify-self: end;
+    z-index: 1;
+    width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    border: 1px solid var(--onebox-border) !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+    object-fit: cover;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .github-row:has(> img.github-avatar) > h3 {
+    padding-right: 44px !important;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .github-row > .github-info-container {
+    grid-area: 1 / 2 / 3 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .onebox-body > h3,
+.topic-post .cooked aside.onebox.githubrepo .onebox-body > h4,
+.topic-post .cooked aside.onebox.githubrepo .github-row > h3,
+.topic-post .cooked aside.onebox.githubrepo .github-row > h4,
+.topic-post .cooked aside.onebox.githubrepo .github-row .github-info-container > h3,
+.topic-post .cooked aside.onebox.githubrepo .github-row .github-info-container > h4 {
+    grid-area: title;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    color: var(--text-title) !important;
+    font-size: 1.05rem !important;
+    font-weight: 760 !important;
+    line-height: 1.35;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .onebox-body > h3 a,
+.topic-post .cooked aside.onebox.githubrepo .onebox-body > h4 a,
+.topic-post .cooked aside.onebox.githubrepo .github-row > h3 a,
+.topic-post .cooked aside.onebox.githubrepo .github-row > h4 a,
+.topic-post .cooked aside.onebox.githubrepo .github-row .github-info-container > h3 a,
+.topic-post .cooked aside.onebox.githubrepo .github-row .github-info-container > h4 a {
+    color: var(--text-title) !important;
+    border-bottom: none !important;
+}
+
+.topic-post .cooked aside.onebox.githubrepo .onebox-body > p,
+.topic-post .cooked aside.onebox.githubrepo .github-row > p,
+.topic-post .cooked aside.onebox.githubrepo .github-row .github-info-container > p {
+    grid-area: excerpt;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0 !important;
+    color: var(--text-desc) !important;
+    font-size: 0.84rem;
+    font-weight: 500;
+    line-height: 1.6;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.topic-post .cooked aside.onebox.githubrepo:focus-within {
+    border-color: var(--c-accent-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent-green) 26%, transparent),
+        0 10px 26px color-mix(in srgb, var(--c-accent-green) 20%, transparent);
+}
+
+@media (max-width: 640px) {
+    .topic-post .cooked aside.onebox.githubrepo .github-row {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "thumb"
+            "title"
+            "excerpt";
+        gap: 10px;
+    }
+
+    .topic-post .cooked aside.onebox.githubrepo .github-row > .github-info-container {
+        grid-area: 2 / 1 / 4 / 2;
+    }
+
+    .topic-post .cooked aside.onebox.githubrepo .onebox-body > h3,
+    .topic-post .cooked aside.onebox.githubrepo .onebox-body > h4,
+    .topic-post .cooked aside.onebox.githubrepo .github-row > h3,
+    .topic-post .cooked aside.onebox.githubrepo .github-row > h4 {
+        font-size: 1rem !important;
     }
 }
 

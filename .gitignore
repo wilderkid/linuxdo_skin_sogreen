@@ -7,6 +7,9 @@
 # Local reference files
 /reference/
 
+# Local tooling state
+/.opencode/
+
 # Zip file
 /linuxdo_ui_project.zip
 
