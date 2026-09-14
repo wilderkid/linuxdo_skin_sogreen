@@ -264,13 +264,18 @@ html:is(.dark, .sogreen-dark) .sidebar-more-section-trigger:hover {
     color: var(--text-title) !important;
 }
 
+html:is(.dark, .sogreen-dark) .sidebar-section-link:hover,
+html:is(.dark, .sogreen-dark) .sidebar-more-section-trigger:hover {
+    box-shadow: 0 3px 12px rgb(0 0 0 / 0.26) !important;
+}
+
 html:is(.dark, .sogreen-dark) .sidebar-section-link.active,
 html:is(.dark, .sogreen-dark) .sidebar-section-link[aria-current="page"] {
     border-color: color-mix(in srgb, var(--c-accent-green) 62%, var(--border-card)) !important;
     border-left-color: var(--c-accent-green-deep) !important;
     background: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card)) !important;
     color: var(--c-accent-green-deep) !important;
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-accent-green) 26%, transparent) !important;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.3), 0 0 12px color-mix(in srgb, var(--c-accent-green) 24%, transparent) !important;
 }
 
 html:is(.dark, .sogreen-dark) .sidebar-section-link-prefix.icon,
