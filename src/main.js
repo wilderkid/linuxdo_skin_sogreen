@@ -2,6 +2,7 @@ import './style.css';
 import './preferences-relaxed.css';
 import './community-orbit.css';
 import './search-page.css';
+import './about-page.css';
 import './dark-mode.css';
 import { runHighlight, setupObserver } from './observer';
 import { initMoreTopicsTabs, moveMoreTopicsList, setupMoreTopicsObserver } from './more-topics';
@@ -28,6 +29,7 @@ function initSogreenUI() {
     'use strict';
 
     applyCustomFont();
+    setupDarkModeSync();
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initSogreenUI, { once: true });

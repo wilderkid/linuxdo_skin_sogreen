@@ -1423,8 +1423,7 @@ article[id^="post_"] {
     border-top: 1px solid var(--border-card);
     margin: 2em 0;
 }
-/* 美化帖子正文中的图片 */
-.topic-post .cooked img:not(.emoji) {
+.topic-post .cooked img:not(.emoji):not(.site-icon):not(.thumbnail):not(.github-avatar):not(.avatar) {
     display: block;
     max-width: 100%;
     height: auto;
@@ -1434,7 +1433,7 @@ article[id^="post_"] {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.topic-post .cooked img:not(.emoji):hover {
+.topic-post .cooked img:not(.emoji):not(.site-icon):not(.thumbnail):not(.github-avatar):not(.avatar):hover {
     box-shadow: 0 0 8px var(--c-accent-green) !important;
 }
 
@@ -1516,7 +1515,192 @@ article[id^="post_"] {
 .topic-post .cooked a:has(> img:not(.emoji)):hover,
 .topic-post .cooked div:has(> img:not(.emoji)):hover {
     box-shadow: none !important;
-    background: none !important; /* 同时移除可能存在的背景色变化 */
+    background: none !important;
+}
+
+.topic-post .cooked aside.onebox {
+    --onebox-radius: 16px;
+    --onebox-border: color-mix(in srgb, var(--c-accent-green) 42%, var(--border-card));
+    --onebox-green-soft: color-mix(in srgb, var(--c-accent-green) 16%, var(--bg-card));
+    overflow: hidden;
+    margin: 16px 0 !important;
+    padding: 0 !important;
+    border: 1px solid var(--onebox-border);
+    border-radius: var(--onebox-radius);
+    background: var(--bg-card);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--c-accent-green) 14%, transparent);
+}
+
+.topic-post .cooked aside.onebox,
+.topic-post .cooked aside.onebox * {
+    letter-spacing: 0 !important;
+}
+
+.topic-post .cooked aside.onebox > div[style*="clear"] {
+    display: none !important;
+}
+
+.topic-post .cooked aside.onebox header.source {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    margin: 0 !important;
+    padding: 8px 14px !important;
+    border-bottom: 1px solid var(--onebox-border);
+    background: var(--onebox-green-soft);
+}
+
+.topic-post .cooked aside.onebox header.source .site-icon {
+    display: block !important;
+    flex: 0 0 16px;
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    object-fit: cover;
+}
+
+.topic-post .cooked aside.onebox header.source a {
+    min-width: 0;
+    color: var(--c-highlight-alpha) !important;
+    border-bottom: none !important;
+    font-size: 0.82rem;
+    font-weight: 650;
+    line-height: 1.3;
+}
+
+.topic-post .cooked aside.onebox .onebox-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 168px;
+    grid-template-areas:
+        "title thumb"
+        "excerpt thumb";
+    align-items: start;
+    gap: 8px 16px;
+    margin: 0 !important;
+    padding: 14px 16px 16px !important;
+}
+
+.topic-post .cooked aside.onebox .onebox-body:not(:has(.thumbnail, .aspect-image, .github-avatar)) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "title"
+        "excerpt";
+}
+
+.topic-post .cooked aside.onebox .onebox-body:has(pre, .github-row) {
+    display: block;
+}
+
+.topic-post .cooked aside.onebox .onebox-body .aspect-image,
+.topic-post .cooked aside.onebox .onebox-body > img.thumbnail {
+    grid-area: thumb;
+    float: none !important;
+    width: 168px !important;
+    max-width: 100%;
+    height: 108px !important;
+    margin: 0 !important;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.topic-post .cooked aside.onebox .onebox-body h3,
+.topic-post .cooked aside.onebox .onebox-body h4 {
+    grid-area: title;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    color: var(--text-title) !important;
+    font-size: 1.02rem !important;
+    font-weight: 760 !important;
+    line-height: 1.35;
+}
+
+.topic-post .cooked aside.onebox .onebox-body h3 a,
+.topic-post .cooked aside.onebox .onebox-body h4 a {
+    color: var(--text-title) !important;
+    border-bottom: none !important;
+}
+
+.topic-post .cooked aside.onebox .onebox-body p {
+    grid-area: excerpt;
+    margin: 0 !important;
+    color: var(--text-desc) !important;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.topic-post .cooked aside.onebox img.thumbnail,
+.topic-post .cooked aside.onebox .aspect-image img {
+    display: block !important;
+    width: 100% !important;
+    height: 108px !important;
+    margin: 0 !important;
+    object-fit: cover;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+.topic-post .cooked aside.onebox .aspect-image img {
+    height: 100% !important;
+    min-height: 108px;
+    border-radius: 0 !important;
+}
+
+.topic-post .cooked aside.onebox .onebox-metadata:empty {
+    display: none !important;
+}
+
+.topic-post .cooked aside.onebox .github-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.topic-post .cooked aside.onebox img.github-avatar {
+    display: block !important;
+    flex: 0 0 48px;
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 !important;
+    border: 1px solid var(--onebox-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    object-fit: cover;
+}
+
+.topic-post .cooked aside.onebox .github-info-container,
+.topic-post .cooked aside.onebox .github-row > div {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.topic-post .cooked aside.onebox pre {
+    margin: 10px 0 0 !important;
+    padding: 12px 14px !important;
+}
+
+@media (max-width: 640px) {
+    .topic-post .cooked aside.onebox .onebox-body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "thumb"
+            "title"
+            "excerpt";
+    }
+
+    .topic-post .cooked aside.onebox .onebox-body .aspect-image,
+    .topic-post .cooked aside.onebox .onebox-body > img.thumbnail {
+        width: 100%;
+    }
+
+    .topic-post .cooked aside.onebox img.thumbnail,
+    .topic-post .cooked aside.onebox .aspect-image img {
+        height: 160px !important;
+        min-height: 160px;
+    }
 }
 
 
@@ -7435,4 +7619,212 @@ body.user-messages-page .topic-list .main-link {
     :is(body.user-messages-page, body.user-billing-page, body.user-badges-page, body:has(.user-main-nav-outlet.billing a.active)) section.about:not(.sogreen-profile-expanded-card) .details .primary {
         grid-template-columns: 56px minmax(0, 1fr);
     }
+}
+
+/* Header user menu dropdown */
+.user-menu,
+.menu-panel:has(.menu-tabs-container),
+.menu-panel:has(.quick-access-panel) {
+    --menu-radius: 16px;
+    --menu-border: color-mix(in srgb, var(--c-accent-green) 42%, var(--border-card));
+    --menu-green-soft: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card));
+    --menu-pink-soft: color-mix(in srgb, var(--c-accent-pink) 16%, var(--bg-card));
+}
+
+.user-menu,
+.menu-panel:has(.menu-tabs-container),
+.menu-panel:has(.quick-access-panel) {
+    overflow: hidden;
+    border: 1px solid var(--menu-border) !important;
+    border-radius: var(--menu-radius) !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 18px 40px color-mix(in srgb, var(--c-accent-green) 16%, transparent) !important;
+}
+
+.user-menu .panel-body,
+.user-menu .panel-body-contents,
+.menu-panel:has(.quick-access-panel) .panel-body,
+.menu-panel:has(.quick-access-panel) .panel-body-contents {
+    display: flex !important;
+    align-items: stretch !important;
+    background: transparent !important;
+}
+
+.panel-body-contents:has(.menu-tabs-container) {
+    display: flex !important;
+    align-items: stretch !important;
+    min-height: 420px;
+}
+
+.menu-tabs-container {
+    --menu-border: color-mix(in srgb, var(--c-accent-green) 42%, var(--border-card));
+    --menu-green-soft: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 56px;
+    width: 56px;
+    padding: 10px 8px !important;
+    border-right: 1px solid var(--menu-border) !important;
+    background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
+}
+
+.menu-tabs-container .tabs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.user-menu-tab {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    color: var(--text-meta) !important;
+    box-shadow: none !important;
+}
+
+.user-menu-tab:hover {
+    border-color: var(--menu-border) !important;
+    background: var(--menu-green-soft) !important;
+    color: var(--c-highlight-alpha) !important;
+}
+
+.user-menu-tab.active,
+.user-menu-tab[aria-selected="true"] {
+    border-color: var(--menu-border) !important;
+    background: var(--menu-green-soft) !important;
+    color: var(--c-highlight-alpha) !important;
+}
+
+.user-menu-tab .d-icon {
+    color: currentColor !important;
+}
+
+.quick-access-panel {
+    --menu-border: color-mix(in srgb, var(--c-accent-green) 42%, var(--border-card));
+    --menu-green-soft: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card));
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px 8px !important;
+    background: transparent !important;
+}
+
+.quick-access-panel ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.quick-access-panel li.notification {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid var(--menu-border) !important;
+    border-radius: 14px !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--c-accent-green) 10%, transparent);
+    overflow: hidden;
+    list-style: none !important;
+}
+
+.quick-access-panel li.notification:not(.read) {
+    border-color: var(--c-accent-green) !important;
+    background: var(--menu-green-soft) !important;
+}
+
+.quick-access-panel li.notification:hover {
+    border-color: color-mix(in srgb, var(--c-accent-pink) 48%, var(--border-card)) !important;
+}
+
+.quick-access-panel li.notification > a {
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 10px 12px !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--text-title) !important;
+    text-decoration: none !important;
+}
+
+.quick-access-panel .icon-avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.quick-access-panel .icon-avatar img.avatar {
+    display: block;
+    width: 40px !important;
+    height: 40px !important;
+    border: 1px solid var(--menu-border) !important;
+    border-radius: 12px !important;
+    background: var(--bg-soft);
+    object-fit: cover;
+}
+
+.quick-access-panel .icon-avatar__icon-wrapper {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--bg-card);
+    border-radius: 999px;
+    background: var(--menu-green-soft);
+    color: var(--c-highlight-alpha) !important;
+}
+
+.quick-access-panel .item-label {
+    display: block;
+    color: var(--c-highlight-alpha) !important;
+    font-size: 0.78rem;
+    font-weight: 720;
+    line-height: 1.25;
+}
+
+.quick-access-panel .item-description {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text-title) !important;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.quick-access-panel .panel-body-bottom,
+.menu-panel .panel-body-bottom {
+    display: flex;
+    justify-content: center;
+    padding: 8px 12px 12px !important;
+    background: transparent !important;
+}
+
+.quick-access-panel .panel-body-bottom .show-all,
+.menu-panel .panel-body-bottom .show-all,
+.quick-access-panel .panel-body-bottom .btn,
+.menu-panel .panel-body-bottom .btn {
+    min-height: 34px;
+    padding: 7px 14px !important;
+    border: 1px solid var(--menu-border) !important;
+    border-radius: 999px !important;
+    background: var(--menu-green-soft) !important;
+    color: var(--c-highlight-alpha) !important;
+    box-shadow: none !important;
 }

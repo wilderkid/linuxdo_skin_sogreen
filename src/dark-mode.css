@@ -387,6 +387,20 @@ html:is(.dark, .sogreen-dark) .cooked pre code {
     color: inherit !important;
 }
 
+html:is(.dark, .sogreen-dark) .topic-post .cooked aside.onebox {
+    background: color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
+    box-shadow: var(--sogreen-dark-card-glow) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-post .cooked aside.onebox header.source {
+    background: color-mix(in srgb, var(--c-accent-green) 14%, var(--bg-card)) !important;
+}
+
+html:is(.dark, .sogreen-dark) .topic-post .cooked aside.onebox .onebox-body h3 a,
+html:is(.dark, .sogreen-dark) .topic-post .cooked aside.onebox .onebox-body h4 a {
+    color: var(--text-title) !important;
+}
+
 html:is(.dark, .sogreen-dark) .menu-panel,
 html:is(.dark, .sogreen-dark) .dropdown-menu,
 html:is(.dark, .sogreen-dark) .user-menu,
@@ -396,6 +410,14 @@ html:is(.dark, .sogreen-dark) .search-menu {
     background: var(--bg-card) !important;
     color: var(--text-desc) !important;
     box-shadow: 0 18px 44px rgb(0 0 0 / 0.32) !important;
+}
+
+html:is(.dark, .sogreen-dark) .menu-tabs-container,
+html:is(.dark, .sogreen-dark) .quick-access-panel li.notification,
+html:is(.dark, .sogreen-dark) .user-menu-tab.active,
+html:is(.dark, .sogreen-dark) .quick-access-panel .panel-body-bottom .show-all,
+html:is(.dark, .sogreen-dark) .menu-panel .panel-body-bottom .show-all {
+    background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
 }
 
 html.sogreen-dark body.search-page {
@@ -427,6 +449,18 @@ html.sogreen-dark body.search-page .search-container .btn-primary,
 html.sogreen-dark body.search-page .search-bar .search-cta:hover,
 html.sogreen-dark body.search-page .search-bar .search-cta:focus-visible {
     color: #111827 !important;
+}
+
+html:is(.dark, .sogreen-dark) body.about-page .contents.body-page > .nav-pills,
+html:is(.dark, .sogreen-dark) body.about-page .about__header,
+html:is(.dark, .sogreen-dark) body.about-page .about__admins,
+html:is(.dark, .sogreen-dark) body.about-page .about__moderators,
+html:is(.dark, .sogreen-dark) body.about-page .about__right-side,
+html:is(.dark, .sogreen-dark) body.about-page .about__left-side > h2 + div,
+html:is(.dark, .sogreen-dark) body.about-page .about-page-users-list .user-info.small,
+html:is(.dark, .sogreen-dark) body.about-page .about__activities-item {
+    background: color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
+    box-shadow: var(--sogreen-dark-card-glow) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
