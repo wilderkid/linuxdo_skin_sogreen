@@ -1,4 +1,6 @@
 - Prefers to run verification/tests themselves rather than have the agent do it — after the code change is complete, stop building elaborate repro/rendering setups (e.g. headless-browser screenshot harnesses) and hand off. Confidence: 0.92
-- Explicitly divides labor as "agent only edits code, user checks the final result" — so treat building/rendering/visual verification as out of scope unless asked. Confidence: 0.9
+- Explicitly divides labor as "agent only edits code, user checks the final result" — so treat building/rendering/visual verification as out of scope unless asked. Confidence: 0.95
 - Values a short handoff that states what changed (which files), what remains unverified, and hints for how they can check it, instead of the agent attempting to prove correctness. Confidence: 0.8
 - 方案卡住时更愿意「换策略」而不是继续在同一实现上反复调试：当某个做法几次都没解决，会主动提出换一种完全不同的实现方式。Confidence: 0.75
+- 描述 UI 问题时倾向直接粘贴真实的 DOM/HTML 片段来锁定目标组件，而不是只靠自然语言描述；应先按这段 HTML 里的类名/结构定位到真正出问题的组件，不要凭描述猜（曾因猜错对象改成了左侧导航栏而被纠正）。Confidence: 0.7
+- 一旦发现改错了目标，期望把误改的改动全部回退、只保留正确的修复，保持 git diff 干净，而不是在错误改动上继续叠加修补。Confidence: 0.6

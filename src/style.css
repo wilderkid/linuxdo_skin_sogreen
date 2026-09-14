@@ -7829,10 +7829,11 @@ body.user-messages-page .topic-list .main-link {
     --menu-green-soft: color-mix(in srgb, var(--c-accent-green) 18%, var(--bg-card));
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    flex: 0 0 56px;
-    width: 56px;
-    padding: 10px 8px !important;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    flex: 0 0 36px;
+    width: 36px;
+    padding: 8px 2px !important;
     border-right: 1px solid var(--menu-border) !important;
     background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
 }
@@ -7843,17 +7844,22 @@ body.user-messages-page .topic-list .main-link {
     gap: 6px;
 }
 
+.menu-tabs-container .bottom-tabs {
+    margin-top: 6px;
+    border-top: 1px solid var(--menu-border) !important;
+}
+
 .user-menu-tab {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    width: 38px !important;
-    height: 38px !important;
-    min-height: 38px !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-height: 30px !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 1px solid transparent !important;
-    border-radius: 12px !important;
+    border-radius: 9px !important;
     background: transparent !important;
     color: var(--text-meta) !important;
     box-shadow: none !important;
