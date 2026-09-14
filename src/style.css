@@ -67,6 +67,14 @@ html, body, input, button, select, textarea, .topic-list .title, span, p, a, div
 }
 .d-icon, .fa { text-shadow: none !important; }
 
+/* 切换亮/暗皮肤时跳过过渡，避免颜色渐变动画造成的延迟感 */
+html.sogreen-theme-switching,
+html.sogreen-theme-switching *,
+html.sogreen-theme-switching *::before,
+html.sogreen-theme-switching *::after {
+    transition: none !important;
+}
+
 /* ==========================================================================
    Homepage welcome banner, safe skin
    ========================================================================== */

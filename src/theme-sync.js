@@ -1,4 +1,5 @@
 const SOGREEN_DARK_CLASS = 'sogreen-dark';
+const SOGREEN_SWITCHING_CLASS = 'sogreen-theme-switching';
 const THEME_MENU_SELECTOR = [
     '.sidebar-theme-toggle',
     '.sidebar-theme-toggle-dropdown',
@@ -43,29 +44,17 @@ function getActiveSchemeFromLinks() {
     const darkLink = document.querySelector('link.dark-scheme');
     if (!lightLink && !darkLink) return null;
 
-    const darkMedia = darkLink?.getAttribute('media');
-    const lightMedia = lightLink?.getAttribute('media');
-    if (darkMedia === 'all' && lightMedia === 'none') return true;
-    if (lightMedia === 'all' && darkMedia === 'none') return false;
-    if (darkLink && !darkLink.disabled && lightLink?.disabled) return true;
-    if (lightLink && !lightLink.disabled && darkLink?.disabled) return false;
+    const darkEnabled = Boolean(darkLink) && !darkLink.disabled && linkMediaMatches(darkLink);
+    const lightEnabled = Boolean(lightLink) && !lightLink.disabled && linkMediaMatches(lightLink);
 
-    const lightMatches = linkMediaMatches(lightLink);
-    const darkMatches = linkMediaMatches(darkLink);
-    if (darkMatches && !lightMatches) return true;
-    if (lightMatches && !darkMatches) return false;
-
-    return null;
+    if (darkEnabled === lightEnabled) return null;
+    return darkEnabled;
 }
 
 function isDarkModeActive() {
     const html = document.documentElement;
     if (html.classList.contains('dark') || document.body?.classList.contains('dark')) return true;
     if (html.classList.contains('light') || document.body?.classList.contains('light')) return false;
-
-    const schemeType = getSchemeType();
-    if (schemeType === 'dark') return true;
-    if (schemeType === 'light') return false;
 
     const linkScheme = getActiveSchemeFromLinks();
     if (linkScheme !== null) return linkScheme;
@@ -75,11 +64,28 @@ function isDarkModeActive() {
     if (setupFlag === 'true') return true;
     if (setupFlag === 'false') return false;
 
+    const schemeType = getSchemeType();
+    if (schemeType === 'dark') return true;
+    if (schemeType === 'light') return false;
+
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
+let switchTimer = 0;
+
+function markThemeSwitching() {
+    const html = document.documentElement;
+    html.classList.add(SOGREEN_SWITCHING_CLASS);
+    clearTimeout(switchTimer);
+    switchTimer = setTimeout(() => html.classList.remove(SOGREEN_SWITCHING_CLASS), 320);
+}
+
 function applyDarkClass(dark) {
-    document.documentElement.classList.toggle(SOGREEN_DARK_CLASS, dark);
+    const html = document.documentElement;
+    if (html.classList.contains(SOGREEN_DARK_CLASS) === dark) return;
+
+    markThemeSwitching();
+    html.classList.toggle(SOGREEN_DARK_CLASS, dark);
 }
 
 function syncDarkClass() {
@@ -127,7 +133,7 @@ function chaseThemeSync(durationMs = 1200) {
 }
 
 function holdThemeGuess(dark) {
-    heldGuess = { dark, until: Date.now() + 800 };
+    heldGuess = { dark, until: Date.now() + 400 };
     applyDarkClass(dark);
     chaseThemeSync();
 }
@@ -141,7 +147,7 @@ function clickTarget(event) {
 function normalizeClass(value) {
     return String(value || '')
         .split(/\s+/)
-        .filter((name) => name && name !== SOGREEN_DARK_CLASS)
+        .filter((name) => name && name !== SOGREEN_DARK_CLASS && name !== SOGREEN_SWITCHING_CLASS)
         .sort()
         .join(' ');
 }
@@ -187,8 +193,20 @@ export function setupDarkModeSync() {
         observer.observe(document.head, {
             childList: true,
             subtree: true,
+            characterData: true,
             attributes: true,
             attributeFilter: ['media', 'disabled', 'data-color-scheme-is-dark', 'class', 'href']
+        });
+    };
+
+    const observeSchemeLinks = () => {
+        ['link.light-scheme', 'link.dark-scheme'].forEach((selector) => {
+            const link = document.querySelector(selector);
+            if (!link) return;
+            observer.observe(link, {
+                attributes: true,
+                attributeFilter: ['media', 'disabled', 'href', 'class', 'data-color-scheme-is-dark']
+            });
         });
     };
 
@@ -201,15 +219,19 @@ export function setupDarkModeSync() {
         });
     };
 
-    observeBody();
-    observeHead();
-    observeSetup();
+    const observeAll = () => {
+        observeBody();
+        observeHead();
+        observeSchemeLinks();
+        observeSetup();
+    };
 
-    if (!document.body || !document.head || !document.getElementById('data-discourse-setup')) {
+    observeAll();
+    syncDarkClass();
+
+    if (!document.body || !document.head || !document.getElementById('data-discourse-setup') || !document.querySelector('link.light-scheme, link.dark-scheme')) {
         document.addEventListener('DOMContentLoaded', () => {
-            observeBody();
-            observeHead();
-            observeSetup();
+            observeAll();
             syncDarkClass();
         }, { once: true });
     }
@@ -249,4 +271,11 @@ export function setupDarkModeSync() {
     } else {
         darkMedia.addListener(syncDarkClass);
     }
+
+    // Safety net: reconcile on a slow interval and whenever the page becomes
+    // active again, so a missed signal can never strand the skin on the old scheme.
+    setInterval(syncDarkClass, 1000);
+    document.addEventListener('visibilitychange', syncDarkClass);
+    window.addEventListener('pageshow', syncDarkClass);
+    window.addEventListener('focus', syncDarkClass);
 }
