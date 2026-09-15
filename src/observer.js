@@ -33,7 +33,19 @@ const HIGHLIGHT_SKIP_SELECTOR = [
     '.user-profile-avatar',
     'a[data-user-card]',
     'button[data-user-card]',
-    '.d-header .current-user'
+    '.d-header',
+    '#d-sidebar',
+    '.sidebar-wrapper',
+    '.chat-drawer',
+    '.chat-drawer-outlet',
+    '.chat-drawer-outlet-container',
+    '.full-page-chat',
+    '.channels-list',
+    '.chat-channel',
+    '.chat-composer',
+    '.chat-header-icon',
+    '.c-navbar-container',
+    '[data-identifier*="chat"]'
 ].join(', ');
 
 const HIGHLIGHT_TARGET_SELECTOR = [
@@ -66,12 +78,7 @@ const HIGHLIGHT_TARGET_SELECTOR = [
     '.user-billing-page .user-content',
     '.search-page .search-container',
     '.about-page .contents.body-page',
-    '.quick-access-panel',
-    '.menu-panel',
-    '#d-sidebar .sidebar-section-header-text',
-    '#d-sidebar .sidebar-section-link-content-text',
-    '#d-sidebar .sidebar-theme-toggle-dropdown .name',
-    '#d-sidebar .d-button-label'
+    '.quick-access-panel'
 ].join(', ');
 
 function highlight(element) {

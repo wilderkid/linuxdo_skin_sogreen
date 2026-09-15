@@ -562,7 +562,8 @@ export function setupUserProfileCardObserver() {
     syncUserProfileCard();
 
     document.addEventListener('click', (event) => {
-        const toggle = event.target.closest(PROFILE_TOGGLE_SELECTOR);
+        const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+        const toggle = target?.closest?.(PROFILE_TOGGLE_SELECTOR);
         if (!toggle) return;
         if (!toggle.closest('section.about')) return;
         scheduleRouteSync();
