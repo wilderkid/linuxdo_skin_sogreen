@@ -11,7 +11,12 @@ import { applyCustomFont, setupFontMenu } from './settings';
 import { setupCommunityOrbitObserver, syncCommunityOrbitPage } from './community-orbit';
 import { setupDarkModeSync } from './theme-sync';
 
+let uiReady = false;
+
 function initSogreenUI() {
+    if (uiReady) return;
+    uiReady = true;
+
     runHighlight();
     setupObserver();
     initMoreTopicsTabs();

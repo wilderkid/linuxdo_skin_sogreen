@@ -76,7 +76,7 @@ function toneText(root) {
             const parent = node.parentElement;
             if (
                 !parent ||
-                parent.closest('style, script, textarea, noscript, svg, .highlight-alpha, .highlight-numeric') ||
+                parent.closest('style, script, textarea, noscript, svg, code, pre, kbd, samp, math, [contenteditable="true"], .highlight-alpha, .highlight-numeric') ||
                 !/[a-zA-Z0-9.\-]/.test(node.nodeValue)
             ) {
                 return NodeFilter.FILTER_REJECT;
@@ -275,7 +275,7 @@ export function syncCommunityOrbitPage() {
     const contentBody = document.querySelector('.published-page-content-body');
     const matches = isCommunityPage(contentBody);
 
-    document.body.classList.toggle(PAGE_CLASS, matches);
+    document.body?.classList.toggle(PAGE_CLASS, matches);
 
     if (!matches || !contentBody) return;
     if (contentBody.dataset[READY_KEY] === 'true') return;
@@ -287,7 +287,19 @@ export function syncCommunityOrbitPage() {
     contentBody.prepend(stage);
 }
 
+let communityObserverReady = false;
+
 export function setupCommunityOrbitObserver() {
+    if (!document.body) {
+        document.addEventListener('DOMContentLoaded', setupCommunityOrbitObserver, { once: true });
+        return;
+    }
+    if (communityObserverReady) {
+        syncCommunityOrbitPage();
+        return;
+    }
+    communityObserverReady = true;
+
     let queued = false;
 
     const scheduleSync = () => {

@@ -422,41 +422,44 @@ html:is(.dark, .sogreen-dark) .search-menu {
 }
 
 html:is(.dark, .sogreen-dark) .menu-tabs-container,
-html:is(.dark, .sogreen-dark) .quick-access-panel li.notification,
+html:is(.dark, .sogreen-dark) .quick-access-panel li:is(.notification, .message, .bookmark),
+html:is(.dark, .sogreen-dark) #quick-access-profile ul > li,
 html:is(.dark, .sogreen-dark) .user-menu-tab.active,
 html:is(.dark, .sogreen-dark) .quick-access-panel .panel-body-bottom .show-all,
-html:is(.dark, .sogreen-dark) .menu-panel .panel-body-bottom .show-all {
+html:is(.dark, .sogreen-dark) .menu-panel .panel-body-bottom .show-all,
+html:is(.dark, .sogreen-dark) .quick-access-panel .panel-body-bottom .btn,
+html:is(.dark, .sogreen-dark) .menu-panel .panel-body-bottom .btn {
     background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
 }
 
-html.sogreen-dark body.search-page {
+html:is(.dark, .sogreen-dark) body.search-page {
     --search-cyan-wash: color-mix(in srgb, var(--c-accent-green) 20%, var(--bg-card));
     --search-pink-wash: color-mix(in srgb, var(--c-accent-pink) 18%, var(--bg-card));
     --search-soft-line: color-mix(in srgb, var(--border-card) 72%, var(--c-accent-green));
 }
 
-html.sogreen-dark body.search-page .search-header,
-html.sogreen-dark body.search-page .search-advanced > .search-info,
-html.sogreen-dark body.search-page .fps-result {
+html:is(.dark, .sogreen-dark) body.search-page .search-header,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced > .search-info,
+html:is(.dark, .sogreen-dark) body.search-page .fps-result {
     background:
         linear-gradient(135deg, color-mix(in srgb, var(--c-accent-green) 8%, transparent), transparent 54%),
         color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
 }
 
-html.sogreen-dark body.search-page .full-page-search.search-query,
-html.sogreen-dark body.search-page .search-advanced-filters input.ember-text-field,
-html.sogreen-dark body.search-page .search-advanced-filters input[type="date"],
-html.sogreen-dark body.search-page .search-advanced-filters input[type="number"],
-html.sogreen-dark body.search-page .select-kit-header,
-html.sogreen-dark body.search-page .semantic-search__container.search-results,
-html.sogreen-dark body.search-page .search-advanced-filters {
+html:is(.dark, .sogreen-dark) body.search-page .full-page-search.search-query,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters input.ember-text-field,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters input[type="date"],
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters input[type="number"],
+html:is(.dark, .sogreen-dark) body.search-page .select-kit-header,
+html:is(.dark, .sogreen-dark) body.search-page .semantic-search__container.search-results,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters {
     background: color-mix(in srgb, var(--bg-card) 84%, var(--bg-soft)) !important;
 }
 
-html.sogreen-dark body.search-page .search-bar .search-cta,
-html.sogreen-dark body.search-page .search-container .btn-primary,
-html.sogreen-dark body.search-page .search-bar .search-cta:hover,
-html.sogreen-dark body.search-page .search-bar .search-cta:focus-visible {
+html:is(.dark, .sogreen-dark) body.search-page .search-bar .search-cta,
+html:is(.dark, .sogreen-dark) body.search-page .search-container .btn-primary,
+html:is(.dark, .sogreen-dark) body.search-page .search-bar .search-cta:hover,
+html:is(.dark, .sogreen-dark) body.search-page .search-bar .search-cta:focus-visible {
     color: #111827 !important;
 }
 

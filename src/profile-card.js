@@ -19,10 +19,57 @@ const PROFILE_FACTS = [
 const TRUST_LEVEL_NAMES = ['新用户', '基本用户', '成员', '常规用户', '领导者'];
 const PRELOADED_USERS_CACHE = { source: null, text: '', username: '', user: null };
 let lastProfileKey = '';
+let profileObserverReady = false;
+
+function decodeUsername(value) {
+    if (!value) return '';
+    try {
+        return decodeURIComponent(String(value)).toLowerCase();
+    } catch {
+        return String(value).toLowerCase();
+    }
+}
 
 function getViewedUsername() {
     const match = window.location.pathname.match(/^\/u\/([^/]+)/i);
-    return match ? decodeURIComponent(match[1]) : '';
+    return match ? decodeUsername(match[1]) : '';
+}
+
+function getLinkedSectionUsername(section) {
+    if (!section) return '';
+
+    const named = [
+        '.user-profile-names__primary a[data-user-card]',
+        '.user-profile-names__primary a[href*="/u/"]',
+        '.username a[data-user-card]',
+        '.username a[href*="/u/"]',
+        '.user-profile-avatar a[data-user-card]',
+        '.user-profile-avatar a[href*="/u/"]'
+    ];
+
+    for (const selector of named) {
+        const el = section.querySelector(selector);
+        if (!el) continue;
+
+        const dataUser = el.getAttribute('data-user-card');
+        if (dataUser) return decodeUsername(dataUser);
+
+        const href = el.getAttribute('href') || '';
+        const match = href.match(/\/u\/([^/?#]+)/i);
+        if (match) return decodeUsername(match[1]);
+    }
+
+    return '';
+}
+
+function isStaleProfileSection(section) {
+    const viewed = getViewedUsername();
+    if (!viewed) return false;
+
+    const linkedUser = getLinkedSectionUsername(section);
+    if (!linkedUser) return false;
+
+    return linkedUser !== viewed;
 }
 
 function isPanelOpen(panel) {
@@ -68,7 +115,17 @@ function getFactByText(text) {
 function getControlledPanel(section) {
     const toggle = section.querySelector(PROFILE_TOGGLE_SELECTOR);
     const controlledPanelId = toggle?.getAttribute('aria-controls');
-    return controlledPanelId ? document.getElementById(controlledPanelId) : null;
+    if (!controlledPanelId) return null;
+
+    const local = section.querySelector(`#${CSS.escape(controlledPanelId)}`);
+    if (local) return local;
+
+    const global = document.getElementById(controlledPanelId);
+    if (global && (section.contains(global) || global.closest('.user-main')?.contains(section))) {
+        return global;
+    }
+
+    return null;
 }
 
 function getProfileDataSource(section) {
@@ -93,11 +150,6 @@ function getProfileDataSource(section) {
         if (candidate && PROFILE_FACTS.some((fact) => candidate.textContent.includes(fact.label))) {
             return candidate;
         }
-    }
-
-    const next = section.nextElementSibling;
-    if (next && PROFILE_FACTS.some((fact) => next.textContent.includes(fact.label))) {
-        return next;
     }
 
     return section;
@@ -223,7 +275,7 @@ function collectProfileFacts(source) {
 
 function getPreloadedUser() {
     const el = document.getElementById('data-preloaded');
-    const viewed = getViewedUsername().toLowerCase();
+    const viewed = getViewedUsername();
     if (!el || !viewed) return null;
 
     const text = el.textContent || '';
@@ -335,6 +387,26 @@ function getFactsMount(section) {
     return section.querySelector('.details .primary') || section.querySelector('.details') || section;
 }
 
+function unwrapIdentityHighlights(root) {
+    if (!root?.querySelectorAll) return;
+
+    root.querySelectorAll([
+        '.user-profile-names .highlight-alpha',
+        '.user-profile-names .highlight-numeric',
+        '.username .highlight-alpha',
+        '.username .highlight-numeric',
+        '.user-profile-avatar .highlight-alpha',
+        '.user-profile-avatar .highlight-numeric',
+        'a[data-user-card] .highlight-alpha',
+        'a[data-user-card] .highlight-numeric'
+    ].join(', ')).forEach((span) => {
+        const parent = span.parentNode;
+        if (!parent) return;
+        parent.replaceChild(document.createTextNode(span.textContent), span);
+        parent.normalize();
+    });
+}
+
 function resetInjectedProfileCards() {
     PRELOADED_USERS_CACHE.source = null;
     PRELOADED_USERS_CACHE.text = '';
@@ -348,6 +420,7 @@ function resetInjectedProfileCards() {
     document.querySelectorAll(`section.about.${PROFILE_CARD_CLASS}`).forEach((section) => {
         section.classList.remove(PROFILE_CARD_CLASS);
     });
+    document.querySelectorAll('section.about').forEach(unwrapIdentityHighlights);
 }
 
 function removeProfileFacts(section) {
@@ -359,13 +432,18 @@ function removeProfileFacts(section) {
 }
 
 function renderProfileFacts(section) {
+    if (isStaleProfileSection(section)) {
+        removeProfileFacts(section);
+        return;
+    }
+
     const source = getProfileDataSource(section);
     let facts = collectProfileFacts(source);
+    const viewed = getViewedUsername();
 
     if (!facts.length) {
         const user = getPreloadedUser();
-        const viewed = getViewedUsername().toLowerCase();
-        const matches = Boolean(user && viewed) && String(user.username || '').toLowerCase() === viewed;
+        const matches = Boolean(user && viewed) && decodeUsername(user.username) === viewed;
         facts = matches ? getActivityFacts(user) : [];
     }
 
@@ -378,7 +456,6 @@ function renderProfileFacts(section) {
     let card = mount.querySelector(`:scope > .${PROFILE_FACTS_CLASS}`);
     const signature = getFactsSignature(facts);
 
-    const viewed = getViewedUsername().toLowerCase();
     if (card && card.dataset.username && card.dataset.username !== viewed) {
         card.remove();
         card = null;
@@ -408,6 +485,14 @@ function renderProfileFacts(section) {
 
 function syncProfileSection(section) {
     if (!section) return;
+
+    if (isStaleProfileSection(section)) {
+        unwrapIdentityHighlights(section);
+        removeProfileFacts(section);
+        section.classList.remove(PROFILE_CARD_CLASS);
+        return;
+    }
+
     const expanded = isProfileExpanded(section);
     section.classList.toggle(PROFILE_CARD_CLASS, expanded);
 
@@ -425,11 +510,27 @@ export function syncUserProfileCard() {
         resetInjectedProfileCards();
     }
 
+    if (!getViewedUsername()) {
+        resetInjectedProfileCards();
+        return;
+    }
+
     document.querySelectorAll(PROFILE_SECTION_SELECTOR).forEach(syncProfileSection);
 }
 
 export function setupUserProfileCardObserver() {
+    if (!document.body) {
+        document.addEventListener('DOMContentLoaded', setupUserProfileCardObserver, { once: true });
+        return;
+    }
+    if (profileObserverReady) {
+        syncUserProfileCard();
+        return;
+    }
+    profileObserverReady = true;
+
     let queued = false;
+    let lastSeenUsername = getViewedUsername();
 
     const scheduleSync = () => {
         if (queued) return;
@@ -445,6 +546,16 @@ export function setupUserProfileCardObserver() {
         setTimeout(scheduleSync, 80);
         setTimeout(scheduleSync, 200);
         setTimeout(scheduleSync, 500);
+        setTimeout(scheduleSync, 900);
+    };
+
+    const onUserRouteMaybeChanged = (beforeUsername) => {
+        if (getViewedUsername() !== beforeUsername) {
+            lastProfileKey = getProfileKey();
+            resetInjectedProfileCards();
+        }
+        lastSeenUsername = getViewedUsername();
+        scheduleRouteSync();
     };
 
     lastProfileKey = getProfileKey();
@@ -457,14 +568,15 @@ export function setupUserProfileCardObserver() {
         scheduleRouteSync();
     }, true);
 
-    window.addEventListener('popstate', scheduleRouteSync);
+    window.addEventListener('popstate', () => onUserRouteMaybeChanged(lastSeenUsername));
 
     const historyMethods = ['pushState', 'replaceState'];
     historyMethods.forEach((method) => {
         const original = history[method];
         history[method] = function patchedHistory() {
+            const beforeUsername = getViewedUsername();
             const result = original.apply(this, arguments);
-            scheduleRouteSync();
+            onUserRouteMaybeChanged(beforeUsername);
             return result;
         };
     });
@@ -481,6 +593,7 @@ export function setupUserProfileCardObserver() {
         });
         if (relevant) scheduleSync();
     });
+
     observer.observe(document.body, {
         childList: true,
         subtree: true,

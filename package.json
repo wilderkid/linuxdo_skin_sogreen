@@ -8,9 +8,9 @@
     "pack": "npm run build && bestzip linuxdo_ui_project.zip dist src package.json vite.config.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "WildKid",
+  "license": "MIT",
+  "description": "LINUX DO forum userscript: modern card layout with a light green/pink accent.",
   "devDependencies": {
     "bestzip": "^2.2.1",
     "vite": "^7.2.6",

@@ -7,6 +7,35 @@ function debounce(func, wait) {
     };
 }
 
+const HIGHLIGHT_SKIP_SELECTOR = [
+    'style',
+    'script',
+    'textarea',
+    'noscript',
+    'svg',
+    'code',
+    'pre',
+    'kbd',
+    'samp',
+    'math',
+    '[contenteditable="true"]',
+    '.highlight-alpha',
+    '.highlight-numeric',
+    '.d-editor',
+    '.d-editor-preview',
+    '.user-profile-names',
+    '.user-profile-names__primary',
+    '.user-profile-names__secondary',
+    '.username',
+    '.username-wrapper',
+    '.names',
+    '.full-name',
+    '.user-profile-avatar',
+    'a[data-user-card]',
+    'button[data-user-card]',
+    '.d-header .current-user'
+].join(', ');
+
 const HIGHLIGHT_TARGET_SELECTOR = [
     '.topic-list',
     '.topic-post',
@@ -47,14 +76,14 @@ const HIGHLIGHT_TARGET_SELECTOR = [
 
 function highlight(element) {
     if (!element || element.nodeType !== Node.ELEMENT_NODE) return;
-    if (element.closest('.highlight-alpha, .highlight-numeric')) return;
+    if (element.closest(HIGHLIGHT_SKIP_SELECTOR)) return;
 
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
         acceptNode(node) {
             const parent = node.parentElement;
             if (
                 !parent ||
-                parent.closest('style, script, textarea, noscript, svg, .highlight-alpha, .highlight-numeric') ||
+                parent.closest(HIGHLIGHT_SKIP_SELECTOR) ||
                 !/[a-zA-Z0-9.\-]/.test(node.nodeValue)
             ) {
                 return NodeFilter.FILTER_REJECT;
@@ -180,5 +209,9 @@ const observer = new MutationObserver((mutations) => {
 });
 
 export function setupObserver() {
+    if (!document.body) {
+        document.addEventListener('DOMContentLoaded', setupObserver, { once: true });
+        return;
+    }
     observer.observe(document.body, { childList: true, subtree: true });
 }

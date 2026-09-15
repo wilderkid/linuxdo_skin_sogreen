@@ -346,8 +346,8 @@ body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-a
     transform: none !important;
 }
 
-html.dark body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group,
-html.dark body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table {
+html:is(.dark, .sogreen-dark) body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) .control-group,
+html:is(.dark, .sogreen-dark) body.user-preferences-page .user-preferences form.form-vertical:not(:has(.pref-avatar)) table {
     background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-soft)) !important;
 }
 

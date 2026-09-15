@@ -4,7 +4,8 @@ const THEME_MENU_SELECTOR = [
     '.sidebar-theme-toggle',
     '.sidebar-theme-toggle-dropdown',
     '.color-scheme-selector',
-    '.select-kit.combo-box'
+    '.interface-color-selector',
+    '.select-kit.color-scheme-selector'
 ].join(', ');
 const THEME_ROW_SELECTOR = [
     '.select-kit-row',

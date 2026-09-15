@@ -654,37 +654,37 @@ body.search-page .search-container .no-results {
     color: var(--text-desc) !important;
 }
 
-html.dark body.search-page {
+html:is(.dark, .sogreen-dark) body.search-page {
     --search-cyan-wash: color-mix(in srgb, var(--c-accent-green) 20%, var(--bg-card));
     --search-pink-wash: color-mix(in srgb, var(--c-accent-pink) 18%, var(--bg-card));
     --search-soft-line: color-mix(in srgb, var(--border-card) 72%, var(--c-accent-green));
 }
 
-html.dark body.search-page .search-bar .search-cta,
-html.dark body.search-page .search-container .btn-primary {
+html:is(.dark, .sogreen-dark) body.search-page .search-bar .search-cta,
+html:is(.dark, .sogreen-dark) body.search-page .search-container .btn-primary {
     color: #111827 !important;
 }
 
-html.dark body.search-page .search-bar .search-cta:hover,
-html.dark body.search-page .search-bar .search-cta:focus-visible {
+html:is(.dark, .sogreen-dark) body.search-page .search-bar .search-cta:hover,
+html:is(.dark, .sogreen-dark) body.search-page .search-bar .search-cta:focus-visible {
     color: #111827 !important;
 }
 
-html.dark body.search-page .search-header,
-html.dark body.search-page .search-advanced > .search-info,
-html.dark body.search-page .fps-result {
+html:is(.dark, .sogreen-dark) body.search-page .search-header,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced > .search-info,
+html:is(.dark, .sogreen-dark) body.search-page .fps-result {
     background:
         linear-gradient(135deg, color-mix(in srgb, var(--c-accent-green) 8%, transparent), transparent 54%),
         color-mix(in srgb, var(--bg-card) 92%, var(--bg-soft)) !important;
 }
 
-html.dark body.search-page .full-page-search.search-query,
-html.dark body.search-page .search-advanced-filters input.ember-text-field,
-html.dark body.search-page .search-advanced-filters input[type="date"],
-html.dark body.search-page .search-advanced-filters input[type="number"],
-html.dark body.search-page .select-kit-header,
-html.dark body.search-page .semantic-search__container.search-results,
-html.dark body.search-page .search-advanced-filters {
+html:is(.dark, .sogreen-dark) body.search-page .full-page-search.search-query,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters input.ember-text-field,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters input[type="date"],
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters input[type="number"],
+html:is(.dark, .sogreen-dark) body.search-page .select-kit-header,
+html:is(.dark, .sogreen-dark) body.search-page .semantic-search__container.search-results,
+html:is(.dark, .sogreen-dark) body.search-page .search-advanced-filters {
     background: color-mix(in srgb, var(--bg-card) 84%, var(--bg-soft)) !important;
 }
 

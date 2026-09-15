@@ -39,15 +39,20 @@ export function initMoreTopicsTabs() {
 
 export function moveMoreTopicsList() {
     const container = document.querySelector(CONTAINER_SELECTOR);
-    if (container) {
-        const row = container.querySelector('.row');
-        if (row) {
-            container.parentNode.insertBefore(row, container);
-        }
+    if (!container || hasNativeTabs(container)) return;
+
+    const row = container.querySelector(':scope > .row');
+    if (row && container.parentNode) {
+        container.parentNode.insertBefore(row, container);
     }
 }
 
 export function setupMoreTopicsObserver() {
+    if (!document.body) {
+        document.addEventListener('DOMContentLoaded', setupMoreTopicsObserver, { once: true });
+        return;
+    }
+
     const moreTopicsObserver = new MutationObserver((mutations) => {
         let shouldInit = false;
         for (const mutation of mutations) {
